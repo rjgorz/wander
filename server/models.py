@@ -8,13 +8,15 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
+    serialize_rules = ('-journals', '-states.user')
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    family_id = db.Column(db.Integer, db.ForeignKey('families.id'))
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
 
     journals = db.relationship('Journal', backref='user')
     states = association_proxy('journals', 'state')
@@ -33,21 +35,22 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8'))
 
-class Family(db.Model, SerializerMixin):
-    __tablename__ = 'families'
+class Group(db.Model, SerializerMixin):
+    __tablename__ = 'groups'
 
     id = db.Column(db.Integer, primary_key=True)
     last_name = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    users = db.relationship('User', backref='family')
+    users = db.relationship('User', backref='group')
 
 class State(db.Model, SerializerMixin):
     __tablename__ = 'states'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    label = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
@@ -56,6 +59,9 @@ class State(db.Model, SerializerMixin):
 
 class Journal(db.Model, SerializerMixin):
     __tablename__ = 'journals'
+
+    serialize_rules = ('-user.state', '-user.journals',
+                       '-state.users', '-state.journals')
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)

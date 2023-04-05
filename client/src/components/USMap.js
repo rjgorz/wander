@@ -25,7 +25,7 @@ const offsets = {
   DC: [49, 21]
 };
 
-const MapChart = ({ currState, setCurrState }) => {
+const MapChart = ({ setCurrState }) => {
   return (
     <ComposableMap projection="geoAlbersUsa">
       <Geographies geography={geoUrl}>
@@ -34,9 +34,9 @@ const MapChart = ({ currState, setCurrState }) => {
             {geographies.map(geo => (
               <Link to={geo.properties.name} key={geo.rsmKey}>
                 <Geography
-                  stroke="#000"
+                  stroke="#fff"
                   geography={geo}
-                  fill="#DDD"
+                  fill="#ddd"
                   onMouseEnter={() => {
                     setCurrState(geo.properties.name)
                   }}
@@ -47,8 +47,8 @@ const MapChart = ({ currState, setCurrState }) => {
               const centroid = geoCentroid(geo);
               const cur = allStates.find(s => s.val === geo.id);
               return (
-                // <Link to={geo.properties.name}>
-                  <g key={geo.rsmKey + "-name"}>
+                <Link to={geo.properties.name} key={geo.rsmKey + "-name"}>
+                  <g>
                     {cur &&
                       centroid[0] > -160 &&
                       centroid[0] < -67 &&
@@ -63,7 +63,6 @@ const MapChart = ({ currState, setCurrState }) => {
                           subject={centroid}
                           dx={offsets[cur.id][0]}
                           dy={offsets[cur.id][1]}
-                          className='state-label'
                         >
                           <text x={4} fontSize={14} alignmentBaseline="middle" >
                             {cur.id}
@@ -71,7 +70,7 @@ const MapChart = ({ currState, setCurrState }) => {
                         </Annotation>
                       ))}
                   </g>
-                // </Link>
+                </Link>
               );
             })}
           </>
