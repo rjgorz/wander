@@ -4,39 +4,47 @@ import Nav from "./Nav";
 import USMap from "./USMap";
 import State from "./State";
 import Login from "./Login";
+import JournalEntry from "./JournalEntry";
 import UserContext from './Context';
+import { Card } from "semantic-ui-react";
 
 function App() {
   const [states, setStates] = useState([]);
   const [currState, setCurrState] = useState({});
   const [userJournals, setUserJournals] = useState([]);
   const [user, setUser] = useState(0);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     // auto-login
-    fetch("/check_session").then((r) => {
-      if (r.ok) {
-        r.json().then((user) => setUser(user));
-      }
-    });
+    fetch("/check_session")
+      .then((r) => r.json())
+      .then((user) => setUser(user));
 
-    fetch(`/user_journals/${user.id}`).then((r) => {
-      if (r.ok) {
-        r.json().then((journals) => setUserJournals(journals));
-      }
-    });
 
-    fetch("/states").then((r) => {
-      if (r.ok) {
-        r.json().then((states) => setStates(states));
-      }
-    });
+    fetch("/states")
+      .then((r) => r.json())
+      .then((states) => setStates(states));
   }, []);
+
+  useEffect(() => {
+    fetch(`/user_journals/${user.id}`)
+      .then((r) => r.json())
+      .then((journals) => {
+        console.log(userJournals)
+        setUserJournals(journals);
+        console.log(userJournals)
+      })
+  }, [refresh]);
 
   function addJournal(newJournal) {
     setUserJournals([newJournal, ...userJournals]);
+    setRefresh(!refresh);
   }
 
+  const journals = userJournals.map(journal => <JournalEntry key={journal.id} journal={journal} />)
+
+  console.log(user)
   if (!user) {
     return <Login onLogin={setUser} />
   } else {
@@ -48,7 +56,12 @@ function App() {
             <USMap setCurrState={setCurrState} />
           </Route>
           <Route path={`/${currState}`}>
-            <State currState={currState} setCurrState={setCurrState} states={states} addJournal={addJournal} />
+            <State currState={currState} states={states} addJournal={addJournal} />
+          </Route>
+          <Route path='/my_journals'>
+            <Card.Group itemsPerRow={2}>
+              {journals}
+            </Card.Group>
           </Route>
         </Switch>
       </UserContext.Provider>

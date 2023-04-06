@@ -38,7 +38,9 @@ class Journals(Resource):
         new_journal = Journal(
             title=request.get_json()['title'],
             visited_cities=request.get_json()['visited_cities'],
-            body=request.get_json()['body']
+            body=request.get_json()['body'],
+            user_id=request.get_json()['user_id'],
+            state_id=request.get_json()['state_id']
         )
 
         db.session.add(new_journal)
@@ -87,7 +89,7 @@ class CheckSession(Resource):
 
             user = User.query.filter(User.id == session['user_id']).first()
 
-            return user.to_dict(), 200
+            return user.to_dict(rules=(('journals',))), 200
 
         return {'error': '401 Unauthorized'}, 401
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')

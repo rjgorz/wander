@@ -19,6 +19,7 @@ class User(db.Model, SerializerMixin):
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
 
     journals = db.relationship('Journal', backref='user')
+    images = db.relationship('Image', backref='user')
     states = association_proxy('journals', 'state')
 
     @hybrid_property
@@ -61,7 +62,8 @@ class Journal(db.Model, SerializerMixin):
     __tablename__ = 'journals'
 
     serialize_rules = ('-user.state', '-user.journals',
-                       '-state.users', '-state.journals')
+                       '-state.users', '-state.journals',
+                       '-images')
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
@@ -70,5 +72,20 @@ class Journal(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+    images = db.relationship('Image', backref='journal')
+
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     state_id = db.Column(db.Integer, db.ForeignKey('states.id'))
+
+class Image(db.Model, SerializerMixin):
+    __tablename__ = 'images'
+
+    serialize_rules = ('-journal.images', '-journal.user', '-journal.state')
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    journal_id = db.Column(db.Integer, db.ForeignKey('journals.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
