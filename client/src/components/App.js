@@ -12,40 +12,39 @@ function App() {
   const [states, setStates] = useState([]);
   const [currState, setCurrState] = useState({});
   const [userJournals, setUserJournals] = useState([]);
-  const [user, setUser] = useState(0);
-  const [refresh, setRefresh] = useState(false);
+  const [user, setUser] = useState({
+    id: 0,
+    username: "",
+    _password_hash: "",
+    journals: [],
+    images: [],
+    states: []
+  });
 
   useEffect(() => {
     // auto-login
-    fetch("/check_session")
-      .then((r) => r.json())
-      .then((user) => setUser(user));
-
-
-    fetch("/states")
-      .then((r) => r.json())
-      .then((states) => setStates(states));
+    fetch("/check_session").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => setUser(user))
+      }
+    })
   }, []);
 
   useEffect(() => {
-    fetch(`/user_journals/${user.id}`)
-      .then((r) => r.json())
-      .then((journals) => {
-        console.log(userJournals)
-        setUserJournals(journals);
-        console.log(userJournals)
-      })
-  }, [refresh]);
+    fetch("/states").then((r) => {
+      if (r.ok) {
+        r.json().then((stateData) => setStates(stateData))
+      }
+    })
+  }, []);
 
   function addJournal(newJournal) {
     setUserJournals([newJournal, ...userJournals]);
-    setRefresh(!refresh);
   }
 
   const journals = userJournals.map(journal => <JournalEntry key={journal.id} journal={journal} />)
 
-  console.log(user)
-  if (!user) {
+  if (user.id === 0) {
     return <Login onLogin={setUser} />
   } else {
     return (
@@ -53,13 +52,13 @@ function App() {
         <Nav setUser={setUser} />
         <Switch>
           <Route exact path='/'>
-            <USMap setCurrState={setCurrState} />
+            <USMap currState={currState} setCurrState={setCurrState} setUserJournals={setUserJournals} />
           </Route>
           <Route path={`/${currState}`}>
-            <State currState={currState} states={states} addJournal={addJournal} />
+            <State currState={currState} states={states} addJournal={addJournal} userJournals={userJournals} />
           </Route>
           <Route path='/my_journals'>
-            <Card.Group itemsPerRow={2}>
+            <Card.Group itemsPerRow={3}>
               {journals}
             </Card.Group>
           </Route>

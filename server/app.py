@@ -53,9 +53,7 @@ class Journals(Resource):
 api.add_resource(Journals, '/user_journals')
 
 class Signup(Resource):
-    
     def post(self):
-
         request_json = request.get_json()
 
         username = request_json.get('username')
@@ -73,31 +71,33 @@ class Signup(Resource):
 
             session['user_id'] = user.id
 
-            print(user.to_dict())
-
-            return user.to_dict(), 201
+            return make_response(
+                user.to_dict(rules=(('journals', 'states'))),
+                201
+            )
 
         except IntegrityError:  
-            return {'error': '422 Unprocessable Entity'}, 422
+            return make_response({'error': '422 Unprocessable Entity'}, 422)
 api.add_resource(Signup, '/signup', endpoint='signup')
 
 class CheckSession(Resource):
-    
     def get(self):
 
         if session.get('user_id'):
 
             user = User.query.filter(User.id == session['user_id']).first()
 
-            return user.to_dict(rules=(('journals',))), 200
+            return make_response(
+                user.to_dict(rules=(('journals','states'))),
+                200
+            )
 
-        return {'error': '401 Unauthorized'}, 401
+        return make_response({'error': '401 Unauthorized'}, 401)
+        # return None
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 
 class Login(Resource):
-    
     def post(self):
-
         request_json = request.get_json()
 
         username = request_json.get('username')
@@ -107,24 +107,24 @@ class Login(Resource):
 
         if user:
             if user.authenticate(password):
-
                 session['user_id'] = user.id
-                return user.to_dict(), 200
 
-        return {'error': '401 Unauthorized'}, 401
+                return make_response(
+                    user.to_dict(rules=(('journals','states'))),
+                    200
+                )
+
+        return make_response({'error': '401 Unauthorized'}, 401)
 api.add_resource(Login, '/login', endpoint='login')
 
 class Logout(Resource):
-    
     def delete(self):
-        
         if session.get('user_id'):
-            
             session['user_id'] = None
             
-            return {}, 204
+            return make_response({}, 204)
         
-        return {'error': '401 Unauthorized'}, 401
+        return make_response({'error': '401 Unauthorized'}, 401)
 api.add_resource(Logout, '/logout', endpoint='logout')
 
 if __name__ == '__main__':

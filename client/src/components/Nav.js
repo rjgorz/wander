@@ -6,18 +6,24 @@ import UserContext from './Context';
 function Nav({ setUser }) {
     const user = useContext(UserContext);
     const [active, setActive] = useState('home');
-    
+
     function handleItemClick(name) {
         setActive(name);
     }
 
     function handleLogoutClick() {
-        fetch("/logout", { method: "DELETE" }).then((r) => {
-            if (r.ok) {
-                setUser(null);
-            }
-        });
+        fetch("/logout", { method: "DELETE" });
+        setUser({
+            id: 0,
+            username: "",
+            _password_hash: "",
+            journals: [],
+            images: [],
+            states: []
+          });
+          console.log(user)
     }
+
 
     return (
         <>
