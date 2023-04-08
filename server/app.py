@@ -37,6 +37,7 @@ class Journals(Resource):
     def post(self):
         new_journal = Journal(
             title=request.get_json()['title'],
+            duration=request.get_json()['duration'],
             visited_cities=request.get_json()['visited_cities'],
             body=request.get_json()['body'],
             user_id=request.get_json()['user_id'],
@@ -51,6 +52,30 @@ class Journals(Resource):
             201
         )
 api.add_resource(Journals, '/user_journals')
+
+class JournalById(Resource):
+    def delete(self, id):
+        journal = Journal.query.filter(Journal.id == id).first()
+
+        db.session.delete(journal)
+        db.session.commit()
+
+        return make_response({ 'success':'Journal successfully deleted' }, 200)
+
+    def patch(self, id):
+        journal = Journal.query.filter(Journal.id == id).first()
+
+        for attr in request.get_json():
+            setattr(journal, attr, request.get_json()[attr])
+        
+        db.session.add(journal)
+        db.session.commit()
+
+        return make_response(
+            journal.to_dict(),
+            200
+        )
+api.add_resource(JournalById, '/user_journals/<int:id>')
 
 class Signup(Resource):
     def post(self):

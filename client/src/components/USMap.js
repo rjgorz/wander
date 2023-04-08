@@ -58,7 +58,19 @@ const MapChart = ({ currState, setCurrState, setUserJournals }) => {
                     stroke="#fff"
                     geography={geo}
                     fill={uniqueStates.includes(geo.properties.name) ? "#FFA83B" : "#ddd"}
+                    // fill={uniqueStates.includes(geo.properties.name) ? '#' + Math.floor(Math.random()*16777215).toString(16) : "#ddd"}
                     onMouseEnter={() => setCurrState(geo.properties.name)}
+                    style={{
+                      default: {
+                        outline: 'none'
+                      },
+                      hover: {
+                        outline: 'none'
+                      },
+                      pressed: {
+                        outline: 'none'
+                      }
+                    }}
                   />
                 </Link>
               ))}
@@ -67,7 +79,7 @@ const MapChart = ({ currState, setCurrState, setUserJournals }) => {
                 const cur = allStates.find(s => s.val === geo.id);
                 return (
                   <Link to={geo.properties.name} key={geo.rsmKey + "-name"}>
-                    <g>
+                    <g onMouseEnter={() => setCurrState(geo.properties.name)}>
                       {cur &&
                         centroid[0] > -160 &&
                         centroid[0] < -67 &&

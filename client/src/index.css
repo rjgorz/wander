@@ -1,4 +1,17 @@
+#title {
+    font-family: 'Pacifico', cursive;
+    font-size: 72px;
+    display: inline-grid;
+}
 
+#root > div > div:nth-child(1) > div > div.sub.header {
+    margin-left: 10px;
+    display: inline-grid;
+}
+
+.header {
+    margin-bottom: 1rem !important;
+}
 
 html {
     font-family: system-ui, sans-serif;
@@ -23,4 +36,3 @@ a :hover {
 #journal-form {
     margin: 5rem 0 2rem .8rem;
 }
-

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Menu } from "semantic-ui-react";
+import { Menu, Header } from "semantic-ui-react";
 import UserContext from './Context';
 
 function Nav({ setUser }) {
@@ -20,32 +20,41 @@ function Nav({ setUser }) {
             journals: [],
             images: [],
             states: []
-          });
-          console.log(user)
+        });
+        console.log(user)
     }
 
+    const style = {
+        'margin-bottom': '2rem'
+    }
 
     return (
-        <>
+        <div className='nav-bar'>
             <div>
-                <h1>Welcome {user.username}!</h1>
+                <Header>
+                    <div id='title'>Wander</div>
+                    <br />
+                    <Header.Subheader>
+                        Welcome {user.username}!
+                    </Header.Subheader>
+                </Header>
             </div>
-            <Menu pointing secondary>
-                <Menu.Item
+            <Menu tabular style={style}>
+                <Menu.Item link
                     as={Link}
                     to='/'
                     name='home'
                     active={active === 'home'}
                     onClick={() => handleItemClick('home')}
                 />
-                <Menu.Item
+                <Menu.Item link
                     as={Link}
                     to='/my_journals'
                     name='my journals'
                     active={active === 'my journals'}
                     onClick={() => handleItemClick('my journals')}
                 />
-                <Menu.Item
+                <Menu.Item link
                     as={Link}
                     to='/group_journals'
                     name='group journals'
@@ -53,7 +62,7 @@ function Nav({ setUser }) {
                     onClick={() => handleItemClick('group journals')}
                 />
                 <Menu.Menu position='right'>
-                    <Menu.Item
+                    <Menu.Item link
                         as={Link}
                         to='/'
                         name='logout'
@@ -62,7 +71,7 @@ function Nav({ setUser }) {
                     />
                 </Menu.Menu>
             </Menu>
-        </>
+        </div>
 
     )
 }

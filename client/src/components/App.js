@@ -4,7 +4,7 @@ import Nav from "./Nav";
 import USMap from "./USMap";
 import State from "./State";
 import Login from "./Login";
-import JournalEntry from "./JournalEntry";
+import AllJournalEntry from "./AllJournalEntry";
 import UserContext from './Context';
 import { Card } from "semantic-ui-react";
 
@@ -12,6 +12,7 @@ function App() {
   const [states, setStates] = useState([]);
   const [currState, setCurrState] = useState({});
   const [userJournals, setUserJournals] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const [user, setUser] = useState({
     id: 0,
     username: "",
@@ -28,7 +29,7 @@ function App() {
         r.json().then((user) => setUser(user))
       }
     })
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     fetch("/states").then((r) => {
@@ -42,7 +43,20 @@ function App() {
     setUserJournals([newJournal, ...userJournals]);
   }
 
-  const journals = userJournals.map(journal => <JournalEntry key={journal.id} journal={journal} />)
+  function handleDelete(id) {
+    fetch(`/user_journals/${id}`, {
+      method: "DELETE",
+    }).then((r) => {
+      if (r.ok) {
+        setUserJournals((journalData) =>
+          journalData.filter((journal) => journal.id !== id)
+        );
+        setRefresh(prev => !prev);
+      }
+    });
+  }
+
+  const journals = userJournals.map(journal => <AllJournalEntry key={journal.id} journal={journal} handleDelete={handleDelete} />)
 
   if (user.id === 0) {
     return <Login onLogin={setUser} />
@@ -55,12 +69,15 @@ function App() {
             <USMap currState={currState} setCurrState={setCurrState} setUserJournals={setUserJournals} />
           </Route>
           <Route path={`/${currState}`}>
-            <State currState={currState} states={states} addJournal={addJournal} userJournals={userJournals} />
+            <State currState={currState} states={states} addJournal={addJournal}
+              userJournals={userJournals} setRefresh={setRefresh} handleDelete={handleDelete} />
           </Route>
           <Route path='/my_journals'>
-            <Card.Group itemsPerRow={3}>
-              {journals}
-            </Card.Group>
+            {journals.length > 0 ? (
+              <Card.Group itemsPerRow={3}>
+                {journals}
+              </Card.Group>
+            ) : <h2>No journal entries yet!</h2>}
           </Route>
         </Switch>
       </UserContext.Provider>

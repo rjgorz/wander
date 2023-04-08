@@ -8,7 +8,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    # serialize_rules = ('-journals', '-states.users')
+    serialize_rules = ('-journals', '-states.users')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False)
@@ -62,13 +62,14 @@ class State(db.Model, SerializerMixin):
 class Journal(db.Model, SerializerMixin):
     __tablename__ = 'journals'
 
-    serialize_rules = ('-user.journals',
+    serialize_rules = ('-user.journals', '-user.states'
                        '-state.users', '-state.journals',
                        '-images')
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
-    visited_cities = db.Column(db.String)
+    duration = db.Column(db.Integer, nullable=False)
+    visited_cities = db.Column(db.String, nullable=False)
     body = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())

@@ -4,11 +4,12 @@ import * as yup from "yup";
 import { Form } from "semantic-ui-react";
 import UserContext from './Context';
 
-function NewJournalForm({ addJournal, setShowForm, selectedState }) {
+function NewJournalForm({ addJournal, setShowForm, selectedState, setRefresh }) {
     const user = useContext(UserContext);
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Must enter a title!"),
+        duration: yup.number().required("Must enter a duration!"),
         visited_cities: yup.string().required("Must enter places visited!"),
         body: yup.string().required("Must enter a post!"),
         user_id: yup.number(),
@@ -18,6 +19,7 @@ function NewJournalForm({ addJournal, setShowForm, selectedState }) {
     const formik = useFormik({
         initialValues: {
             title: '',
+            duration: 0,
             visited_cities: '',
             body: '',
             user_id: user.id,
@@ -36,7 +38,9 @@ function NewJournalForm({ addJournal, setShowForm, selectedState }) {
                 if (res.ok) {
                     res.json().then(journal => {
                         addJournal(journal);
-                        setShowForm(prev => !prev)
+                        setShowForm(prev => !prev);
+                        setRefresh(prev => !prev);
+                        user.states.append(selectedState.name);
                     })
                 }
             })
@@ -45,7 +49,7 @@ function NewJournalForm({ addJournal, setShowForm, selectedState }) {
 
     return (
         <div id='journal-form'>
-            <h1>FORM</h1>
+            <h2>New Journal Entry:</h2>
             <Form onSubmit={formik.handleSubmit}>
                 <Form.Group>
                     <br />
@@ -56,8 +60,12 @@ function NewJournalForm({ addJournal, setShowForm, selectedState }) {
                     <Form.Input label='Places Visited:' type='text' name='visited_cities' value={formik.values.visited_cities} onChange={formik.handleChange} />
                     {formik.errors.visited_cities ? <div>{formik.errors.visited_cities}</div> : null}
                 </Form.Group>
-                <br />
-                <br />
+                <Form.Group>
+                    <Form.Input label='Duration (days):' type='number' name='duration' value={formik.values.duration} onChange={formik.handleChange} />
+                    {formik.errors.duration ? <div>{formik.errors.duration}</div> : null}
+                    <br />
+                    <br />
+                </Form.Group>
                 <Form.TextArea label='Post:' type='text' name='body' value={formik.values.body} onChange={formik.handleChange} />
                 {formik.errors.body ? <div>{formik.errors.body}</div> : null}
                 <br />
