@@ -25,7 +25,7 @@ function Nav({ setUser }) {
     }
 
     const style = {
-        'margin-bottom': '2rem'
+        'marginBottom': '2rem'
     }
 
     return (

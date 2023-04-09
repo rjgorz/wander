@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import EditJournalModal from './EditJournalModal';
 import { Card, Icon, Divider, Button } from 'semantic-ui-react';
 
-function AllJournalEntry({ journal, handleDelete }) {
+function AllJournalEntry({ journal, handleDelete, handleEdit, setRefresh }) {
+    const [open, setOpen] = useState(false);
     const { title, duration, visited_cities, body, state } = journal;
     return (
         <Card raised>
@@ -9,6 +11,7 @@ function AllJournalEntry({ journal, handleDelete }) {
                 <Card.Header icon as='h1'>
                     <Icon name='plane' />
                     {title}
+                    <EditJournalModal journal={journal} open={open} setOpen={setOpen} handleEdit={handleEdit} setRefresh={setRefresh} />
                     <Button inverted icon floated='right' onClick={() => handleDelete(journal.id)}>
                         <Icon size='small' name='trash alternate outline' color='black' />
                     </Button>

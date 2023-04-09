@@ -4,14 +4,14 @@ import NewJournalForm from './NewJournalForm';
 import StateJournalEntry from './StateJournalEntry';
 import UserContext from './Context';
 
-function State({ currState, states, addJournal, userJournals, setRefresh, handleDelete }) {
+function State({ currState, states, addJournal, userJournals, setRefresh, handleDelete, handleEdit }) {
     const user = useContext(UserContext);
     const [showForm, setShowForm] = useState(false);
 
     const selectedState = states.filter(state => state.name === currState)[0];
     const stateJournals = userJournals.filter(journal => journal.state.name === selectedState.name);
 
-    const journals = stateJournals.map(journal => <StateJournalEntry key={journal.id} journal={journal} handleDelete={handleDelete} />)
+    const journals = stateJournals.map(journal => <StateJournalEntry key={journal.id} journal={journal} handleDelete={handleDelete} handleEdit={handleEdit} setRefresh={setRefresh} />)
 
     return (
         <>

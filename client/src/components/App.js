@@ -56,7 +56,17 @@ function App() {
     });
   }
 
-  const journals = userJournals.map(journal => <AllJournalEntry key={journal.id} journal={journal} handleDelete={handleDelete} />)
+  function handleEdit(updatedJournal) {
+    const updatedJournals = userJournals.map(ogJournal => {
+      if (ogJournal.id === updatedJournal.id)
+        return updatedJournal;
+      else
+        return ogJournal;
+    });
+    setUserJournals(updatedJournals);
+  }
+
+  const journals = userJournals.map(journal => <AllJournalEntry key={journal.id} journal={journal} handleDelete={handleDelete} handleEdit={handleEdit} setRefresh={setRefresh} />)
 
   if (user.id === 0) {
     return <Login onLogin={setUser} />
@@ -70,7 +80,8 @@ function App() {
           </Route>
           <Route path={`/${currState}`}>
             <State currState={currState} states={states} addJournal={addJournal}
-              userJournals={userJournals} setRefresh={setRefresh} handleDelete={handleDelete} />
+              userJournals={userJournals} setRefresh={setRefresh} handleDelete={handleDelete}
+              handleEdit={handleEdit} />
           </Route>
           <Route path='/my_journals'>
             {journals.length > 0 ? (
