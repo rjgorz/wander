@@ -8,7 +8,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-journals', '-states.users')
+    serialize_rules = ('-journals.user', '-states.users', '-groups.users', '-user_groups')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -17,8 +17,6 @@ class User(db.Model, SerializerMixin):
     last_name = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-
-    group_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
 
     journals = db.relationship('Journal', backref='user')
     images = db.relationship('Image', backref='user')
@@ -102,8 +100,8 @@ class Image(db.Model, SerializerMixin):
 class UserGroup(db.Model, SerializerMixin):
     __tablename__ = 'user_groups'
 
-    serialize_rules = ('-user.journals', '-user.states'
-                       '-group.users', '-group.journals',
+    serialize_rules = ('-user.journals', '-user.states',
+                    #    '-group.users', '-group.journals',
                        '-images')
 
     id = db.Column(db.Integer, primary_key=True)

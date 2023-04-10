@@ -101,7 +101,7 @@ class Signup(Resource):
             session['user_id'] = user.id
 
             return make_response(
-                user.to_dict(rules=(('journals', 'states'))),
+                user.to_dict(rules=(('journals', 'states', 'groups'))),
                 201
             )
 
@@ -117,7 +117,7 @@ class CheckSession(Resource):
             user = User.query.filter(User.id == session['user_id']).first()
 
             return make_response(
-                user.to_dict(rules=(('journals','states'))),
+                user.to_dict(rules=(('journals','states', 'groups'))),
                 200
             )
 
@@ -139,7 +139,7 @@ class Login(Resource):
                 session['user_id'] = user.id
 
                 return make_response(
-                    user.to_dict(rules=(('journals','states'))),
+                    user.to_dict(rules=(('journals','states', 'groups'))),
                     200
                 )
 
