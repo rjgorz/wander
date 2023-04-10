@@ -82,10 +82,14 @@ class Signup(Resource):
         request_json = request.get_json()
 
         username = request_json.get('username')
+        first_name = request_json.get('first_name')
+        last_name = request_json.get('last_name')
         password = request_json.get('password')
 
         user = User(
             username=username,
+            first_name=first_name,
+            last_name=last_name,
         )
         # the setter will encrypt this
         user.password_hash = password

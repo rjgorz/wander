@@ -1,8 +1,8 @@
-"""rebuild
+"""fixed
 
-Revision ID: e7bc2cf9bdc1
+Revision ID: 08d6912eb10b
 Revises: 
-Create Date: 2023-04-07 12:21:03.435751
+Create Date: 2023-04-10 11:33:16.526240
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e7bc2cf9bdc1'
+revision = '08d6912eb10b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -38,11 +38,14 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(), nullable=False),
     sa.Column('_password_hash', sa.String(), nullable=False),
+    sa.Column('first_name', sa.String(), nullable=False),
+    sa.Column('last_name', sa.String(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('group_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['group_id'], ['groups.id'], name=op.f('fk_users_group_id_groups')),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('username')
     )
     op.create_table('journals',
     sa.Column('id', sa.Integer(), nullable=False),

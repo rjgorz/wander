@@ -17,7 +17,8 @@ if __name__ == '__main__':
 
     with app.app_context():
         db.session.query(State).delete()
-        db.session.query(Journal).delete()
+        # db.session.query(User).delete()
+        # db.session.query(Journal).delete()
         print("Starting seed...")
         # Seed code goes here!
 

@@ -21,7 +21,6 @@ function Nav({ setUser }) {
             images: [],
             states: []
         });
-        console.log(user)
     }
 
     const style = {
@@ -62,6 +61,13 @@ function Nav({ setUser }) {
                     onClick={() => handleItemClick('group journals')}
                 />
                 <Menu.Menu position='right'>
+                    <Menu.Item link
+                        as={Link}
+                        to='/profile'
+                        name='profile'
+                        active={active === 'profile'}
+                        onClick={() => handleItemClick('profile')}
+                    />
                     <Menu.Item link
                         as={Link}
                         to='/'

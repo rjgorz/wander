@@ -3,6 +3,8 @@ import { Button, Error, Input, FormField, Label } from "../styles";
 
 function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState([]);
@@ -20,6 +22,8 @@ function SignUpForm({ onLogin }) {
       body: JSON.stringify({
         username,
         password,
+        first_name,
+        last_name,
         password_confirmation: passwordConfirmation,
       }),
     }).then((r) => {
@@ -42,6 +46,26 @@ function SignUpForm({ onLogin }) {
           autoComplete="off"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+        />
+      </FormField>
+      <FormField>
+        <Label htmlFor="first_name">First Name</Label>
+        <Input
+          type="text"
+          id="first_name"
+          autoComplete="off"
+          value={first_name}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+      </FormField>
+      <FormField>
+        <Label htmlFor="last_name">Last Name</Label>
+        <Input
+          type="text"
+          id="last_name"
+          autoComplete="off"
+          value={last_name}
+          onChange={(e) => setLastName(e.target.value)}
         />
       </FormField>
       <FormField>

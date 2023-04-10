@@ -4,6 +4,7 @@ import Nav from "./Nav";
 import USMap from "./USMap";
 import State from "./State";
 import Login from "./Login";
+import Profile from "./Profile";
 import AllJournalEntry from "./AllJournalEntry";
 import UserContext from './Context';
 import { Card } from "semantic-ui-react";
@@ -89,6 +90,12 @@ function App() {
                 {journals}
               </Card.Group>
             ) : <h2>No journal entries yet!</h2>}
+          </Route>
+          <Route path='/group_journals'>
+              <h1>PLACEHOLDER</h1>
+          </Route>
+          <Route path='/profile'>
+            <Profile />
           </Route>
         </Switch>
       </UserContext.Provider>

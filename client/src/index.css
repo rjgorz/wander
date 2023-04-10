@@ -17,6 +17,15 @@
     transform: translateY(-9vh);
 }
 
+body > div.ui.page.modals.dimmer.transition.visible.active > div > div.actions > button {
+    color: white;
+    background-color: #FFA83B;
+}
+
+.error {
+    color: red;
+}
+
 html {
     font-family: system-ui, sans-serif;
     font-size: 1.25rem;
@@ -35,8 +44,4 @@ svg {
 a :hover {
     opacity: 60%;
     background-color: black !important;
-}
-
-#journal-form {
-    margin: 5rem 0 2rem .8rem;
 }

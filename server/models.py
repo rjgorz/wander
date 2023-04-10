@@ -11,8 +11,10 @@ class User(db.Model, SerializerMixin):
     serialize_rules = ('-journals', '-states.users')
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
@@ -20,7 +22,10 @@ class User(db.Model, SerializerMixin):
 
     journals = db.relationship('Journal', backref='user')
     images = db.relationship('Image', backref='user')
+    user_groups = db.relationship('UserGroup', backref='user')
+
     states = association_proxy('journals', 'state')
+    groups = association_proxy('user_groups', 'group')
 
     @hybrid_property
     def password_hash(self):
@@ -40,11 +45,13 @@ class Group(db.Model, SerializerMixin):
     __tablename__ = 'groups'
 
     id = db.Column(db.Integer, primary_key=True)
-    last_name = db.Column(db.String, nullable=False)
+    group_name = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    users = db.relationship('User', backref='group')
+    user_groups = db.relationship('UserGroup', backref='group')
+
+    users = association_proxy('user_groups', 'user')
 
 class State(db.Model, SerializerMixin):
     __tablename__ = 'states'
@@ -91,3 +98,18 @@ class Image(db.Model, SerializerMixin):
 
     journal_id = db.Column(db.Integer, db.ForeignKey('journals.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+class UserGroup(db.Model, SerializerMixin):
+    __tablename__ = 'user_groups'
+
+    serialize_rules = ('-user.journals', '-user.states'
+                       '-group.users', '-group.journals',
+                       '-images')
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
