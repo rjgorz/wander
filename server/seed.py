@@ -19,7 +19,7 @@ if __name__ == '__main__':
         db.session.query(State).delete()
         # db.session.query(User).delete()
         # db.session.query(Journal).delete()
-        db.session.query(UserGroup).delete()
+        # db.session.query(UserGroup).delete()
         print("Starting seed...")
         # Seed code goes here!
 

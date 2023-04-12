@@ -6,9 +6,7 @@ function JoinGroup({ groups, setRefresh, setShowJoin }) {
     const [menuSelection, setSelection] = useState("");
     const user = useContext(UserContext);
 
-    const filteredGroups = groups.filter(group => {
-        return !user.groups.includes(group.group_name);
-    });
+    const filteredGroups = groups.filter(masterGroup => user.groups.every(filterGroup => filterGroup.id !== masterGroup.id));
 
     const groupChoices = filteredGroups.map(group => {
         return {

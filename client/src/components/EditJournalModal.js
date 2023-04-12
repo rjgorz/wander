@@ -9,7 +9,7 @@ function EditJournalModal({ journal, open, setOpen, setRefresh, handleEdit }) {
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Must enter a title!"),
-        duration: yup.number().required("Must enter a duration!"),
+        duration: yup.number().positive().min(1).required("Must enter a duration!"),
         visited_cities: yup.string().required("Must enter places visited!"),
         body: yup.string().required("Must enter a post!"),
         user_id: yup.number(),

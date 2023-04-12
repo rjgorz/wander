@@ -5,6 +5,7 @@ import USMap from "./USMap";
 import State from "./State";
 import Login from "./Login";
 import Profile from "./Profile";
+import GroupJournals from "./GroupJournals";
 import AllJournalEntry from "./AllJournalEntry";
 import UserContext from './Context';
 import { Card } from "semantic-ui-react";
@@ -105,7 +106,9 @@ function App() {
             ) : <h2>No journal entries yet!</h2>}
           </Route>
           <Route path='/group_journals'>
-              <h1>PLACEHOLDER</h1>
+            <Card.Group itemsPerRow={1}>
+              <GroupJournals />
+            </Card.Group>
           </Route>
           <Route path='/profile'>
             <Profile addGroup={addGroup} setRefresh={setRefresh} groups={groups} />

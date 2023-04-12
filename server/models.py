@@ -4,7 +4,6 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 from config import db, bcrypt
 
-# Models go here!
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
@@ -43,7 +42,7 @@ class User(db.Model, SerializerMixin):
 class Group(db.Model, SerializerMixin):
     __tablename__ = 'groups'
 
-    serialize_rules = ('-user_groups', '-users.journals', '-users.images',\
+    serialize_rules = ('-user_groups', '-users.images',\
                        '-created_at', '-updated_at')
 
     id = db.Column(db.Integer, primary_key=True)
