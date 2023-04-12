@@ -11,6 +11,7 @@ import { Card } from "semantic-ui-react";
 
 function App() {
   const [states, setStates] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [currState, setCurrState] = useState({});
   const [userJournals, setUserJournals] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -40,8 +41,20 @@ function App() {
     })
   }, []);
 
+  useEffect(() => {
+    fetch("/groups").then((r) => {
+      if (r.ok) {
+        r.json().then((groupData) => setGroups(groupData))
+      }
+    })
+  }, []);
+
   function addJournal(newJournal) {
     setUserJournals([newJournal, ...userJournals]);
+  }
+
+  function addGroup(newGroup) {
+    setGroups([newGroup, ...groups]);
   }
 
   function handleDelete(id) {
@@ -86,7 +99,7 @@ function App() {
           </Route>
           <Route path='/my_journals'>
             {journals.length > 0 ? (
-              <Card.Group itemsPerRow={3}>
+              <Card.Group itemsPerRow={2}>
                 {journals}
               </Card.Group>
             ) : <h2>No journal entries yet!</h2>}
@@ -95,7 +108,7 @@ function App() {
               <h1>PLACEHOLDER</h1>
           </Route>
           <Route path='/profile'>
-            <Profile />
+            <Profile addGroup={addGroup} setRefresh={setRefresh} groups={groups} />
           </Route>
         </Switch>
       </UserContext.Provider>

@@ -67,20 +67,20 @@ function NewJournalForm({ addJournal, selectedState, setRefresh, open, setOpen }
                         <Form.Group>
                             <br />
                             <Form.Input label='Title:' type='text' name='title' value={formik.values.title} onChange={formik.handleChange} />
-                            {formik.errors.title ? <div>{formik.errors.title}</div> : null}
+                            {formik.errors.title ? <div className='error'>{formik.errors.title}</div> : null}
                             <br />
                             <br />
                             <Form.Input label='Places Visited:' type='text' name='visited_cities' value={formik.values.visited_cities} onChange={formik.handleChange} />
-                            {formik.errors.visited_cities ? <div>{formik.errors.visited_cities}</div> : null}
+                            {formik.errors.visited_cities ? <div className='error'>{formik.errors.visited_cities}</div> : null}
                         </Form.Group>
                         <Form.Group>
                             <Form.Input label='Duration (days):' type='number' name='duration' value={formik.values.duration} onChange={formik.handleChange} />
-                            {formik.errors.duration ? <div>{formik.errors.duration}</div> : null}
+                            {formik.errors.duration ? <div className='error'>{formik.errors.duration}</div> : null}
                             <br />
                             <br />
                         </Form.Group>
                         <Form.TextArea label='Post:' type='text' name='body' value={formik.values.body} onChange={formik.handleChange} />
-                        {formik.errors.body ? <div>{formik.errors.body}</div> : null}
+                        {formik.errors.body ? <div className='error'>{formik.errors.body}</div> : null}
                         <br />
                         <Form.Button type="submit">Submit</Form.Button>
                     </Form>

@@ -10,7 +10,7 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, User, State, Journal, Group
+from models import db, User, State, Journal, Group, UserGroup
 
 if __name__ == '__main__':
     fake = Faker()
@@ -19,6 +19,7 @@ if __name__ == '__main__':
         db.session.query(State).delete()
         # db.session.query(User).delete()
         # db.session.query(Journal).delete()
+        db.session.query(UserGroup).delete()
         print("Starting seed...")
         # Seed code goes here!
 

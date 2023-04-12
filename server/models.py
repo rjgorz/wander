@@ -8,7 +8,8 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-journals.user', '-states.users', '-groups.users', '-user_groups')
+    serialize_rules = ('-journals.user', '-states.users', '-user_groups',
+                       '-created_at', '-updated_at', '-_password_hash')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -42,17 +43,22 @@ class User(db.Model, SerializerMixin):
 class Group(db.Model, SerializerMixin):
     __tablename__ = 'groups'
 
+    serialize_rules = ('-user_groups', '-users.journals', '-users.images',\
+                       '-created_at', '-updated_at')
+
     id = db.Column(db.Integer, primary_key=True)
-    group_name = db.Column(db.String, nullable=False)
+    group_name = db.Column(db.String, unique=True, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     user_groups = db.relationship('UserGroup', backref='group')
-
     users = association_proxy('user_groups', 'user')
 
 class State(db.Model, SerializerMixin):
     __tablename__ = 'states'
+
+    serialize_rules = ('-journals.user', '-journals.state',
+                       '-created_at', '-updated_at')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -69,7 +75,8 @@ class Journal(db.Model, SerializerMixin):
 
     serialize_rules = ('-user.journals', '-user.states'
                        '-state.users', '-state.journals',
-                       '-images')
+                       '-journal.user', '-images',
+                       '-created_at', '-updated_at')
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
@@ -87,7 +94,8 @@ class Journal(db.Model, SerializerMixin):
 class Image(db.Model, SerializerMixin):
     __tablename__ = 'images'
 
-    serialize_rules = ('-journal.images', '-journal.user', '-journal.state')
+    serialize_rules = ('-journal.images', '-journal.user', '-journal.state',
+                       '-created_at', '-updated_at')
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -100,9 +108,9 @@ class Image(db.Model, SerializerMixin):
 class UserGroup(db.Model, SerializerMixin):
     __tablename__ = 'user_groups'
 
-    serialize_rules = ('-user.journals', '-user.states',
-                    #    '-group.users', '-group.journals',
-                       '-images')
+    # serialize_rules = ('-user.journals', '-user.states',
+    #                    '-group.users', '-group.journals',
+    #                    '-images')
 
     id = db.Column(db.Integer, primary_key=True)
 

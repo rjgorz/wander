@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 
 # Local imports
 from config import app, db, api
-from models import User, State, Journal, Group
+from models import User, State, Journal, Group, UserGroup
 
 class States(Resource):
     def get(self):
@@ -57,6 +57,9 @@ class JournalById(Resource):
     def delete(self, id):
         journal = Journal.query.filter(Journal.id == id).first()
 
+        if not journal:
+            return make_response({})
+
         db.session.delete(journal)
         db.session.commit()
 
@@ -76,6 +79,45 @@ class JournalById(Resource):
             200
         )
 api.add_resource(JournalById, '/user_journals/<int:id>')
+
+class Groups(Resource):
+    def get(self):
+        group_dicts = [group.to_dict(rules=(('users',))) for group in Group.query.all()]
+
+        return make_response(
+            group_dicts,
+            200
+        )
+    
+    def post(self):
+        new_group = Group(
+            group_name=request.get_json()['group_name']
+        )
+
+        db.session.add(new_group)
+        db.session.commit()
+
+        return make_response(
+            new_group.to_dict(rules=(('users',))),
+            201
+        )
+api.add_resource(Groups, '/groups')
+
+class UserGroups(Resource):
+    def post(self):
+        new_ug = UserGroup(
+            user_id=request.get_json()['user_id'],
+            group_id=request.get_json()['group_id']
+        )
+
+        db.session.add(new_ug)
+        db.session.commit()
+
+        return make_response(
+            new_ug.to_dict(),
+            201
+        )
+api.add_resource(UserGroups, '/user_groups')
 
 class Signup(Resource):
     def post(self):
@@ -101,7 +143,7 @@ class Signup(Resource):
             session['user_id'] = user.id
 
             return make_response(
-                user.to_dict(rules=(('journals', 'states', 'groups'))),
+                user.to_dict(rules=(('journals', 'states', 'groups', 'groups.users'))),
                 201
             )
 
@@ -117,7 +159,7 @@ class CheckSession(Resource):
             user = User.query.filter(User.id == session['user_id']).first()
 
             return make_response(
-                user.to_dict(rules=(('journals','states', 'groups'))),
+                user.to_dict(rules=(('journals','states', 'groups', 'groups.users'))),
                 200
             )
 
@@ -139,7 +181,7 @@ class Login(Resource):
                 session['user_id'] = user.id
 
                 return make_response(
-                    user.to_dict(rules=(('journals','states', 'groups'))),
+                    user.to_dict(rules=(('journals','states', 'groups', 'groups.users'))),
                     200
                 )
 

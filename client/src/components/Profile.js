@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react';
 import UserContext from './Context';
-import { Header, Statistic, Icon, Divider, Button } from 'semantic-ui-react';
+import JoinGroup from './JoinGroup';
+import CreateGroup from './CreateGroup';
+import { Header, Statistic, Icon, Divider, Button, List } from 'semantic-ui-react';
 
-function Profile() {
+function Profile({ addGroup, setRefresh, groups }) {
     const user = useContext(UserContext);
     const [showJoin, setShowJoin] = useState(false);
     const [showCreate, setShowCreate] = useState(false);
@@ -20,13 +22,31 @@ function Profile() {
     }
     avg = avg / user.journals.length;
 
-    const groups = user.groups.map(group => group.name);
+    console.log(user)
+
+    const userGroups = user.groups.map(group => {
+        const len = group.users.length;
+        return (
+            <List key={group.id}>
+                <List.Item>
+                    <List.Content>
+                        <List.Header>{group.group_name}</List.Header>
+                        <List.Description><em>{len} {len === 1 ? 'Member' : 'Members'}</em></List.Description>
+                        <br />
+                    </List.Content>
+                </List.Item>
+            </List>
+
+        )
+    });
 
     return (
         <>
             <Header size='huge'>{user.first_name + ' ' + user.last_name}</Header>
             <br />
-
+            <Divider />
+            <br />
+            <br />
             <Statistic.Group widths='three'>
                 <Statistic>
                     <Statistic.Value>
@@ -57,17 +77,26 @@ function Profile() {
             <br />
             <Divider />
             <br />
-            <Header size='large'>Groups</Header>
-            {user.groups.length > 0 ? groups : <h3>You are not in any groups. Join or create one now!</h3>}
+            <Header size='large'>Joined Groups</Header>
+            {user.groups.length > 0 ? userGroups : <h3>You are not in any groups. Join or create one now!</h3>}
             <br />
             <br />
             <Button.Group>
-                <Button onClick={() => setShowJoin(!showJoin)}>Join a Group!</Button>
+                <Button onClick={() => {
+                    setShowJoin(!showJoin);
+                    setShowCreate(false);
+                }}>Join a Group!</Button>
                 <Button.Or />
-                <Button onClick={() => setShowCreate(!showCreate)}>Create a Group!</Button>
+                <Button onClick={() => {
+                    setShowCreate(!showCreate);
+                    setShowJoin(false);
+                }}>Create a Group!</Button>
             </Button.Group>
+            <br />
+            <br />
+            {showCreate ? <CreateGroup addGroup={addGroup} setRefresh={setRefresh} setShowCreate={setShowCreate} /> : null}
+            {showJoin ? <JoinGroup groups={groups} setRefresh={setRefresh} setShowJoin={setShowJoin} /> : null}
         </>
-
     )
 }
 
