@@ -106,7 +106,7 @@ function App() {
             ) : <h2>No journal entries yet!</h2>}
           </Route>
           <Route path='/group_journals'>
-            <Card.Group itemsPerRow={1}>
+            <Card.Group >
               <GroupJournals />
             </Card.Group>
           </Route>

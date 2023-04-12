@@ -1,10 +1,10 @@
 import React from 'react';
 import { Card, Icon, Divider } from 'semantic-ui-react';
 
-function GroupJournalEntry({ journal, groupUser }) {
+function GroupJournalEntry({ journal }) {
     const { title, duration, visited_cities, body, state } = journal;
     return (
-        <Card raised>
+        <Card raised className='group_journal'>
             <Card.Content>
                 <Card.Header icon as='h1'>
                     <Icon name='plane' />
@@ -12,7 +12,7 @@ function GroupJournalEntry({ journal, groupUser }) {
                 </Card.Header>
                 <Divider />
                 <Card.Meta>
-                    {state.name + ' - ' + visited_cities + ' | ' + duration + ' days | Written By ' + groupUser.first_name + ' ' + groupUser.last_name}
+                    {state.name + ' - ' + visited_cities + ' | ' + duration + ' days'}
                 </Card.Meta>
                 <Card.Description>
                     {body}

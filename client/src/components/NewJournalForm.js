@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Form, Button, Modal, Header } from "semantic-ui-react";
@@ -6,6 +6,11 @@ import UserContext from './Context';
 
 function NewJournalForm({ addJournal, selectedState, setRefresh, open, setOpen }) {
     const user = useContext(UserContext);
+    const [selectedFiles, setSelectedFiles] = useState([]);
+
+    function handleFileInput(event) {
+        setSelectedFiles(event.target.files);
+    };
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Must enter a title!"),
@@ -67,22 +72,24 @@ function NewJournalForm({ addJournal, selectedState, setRefresh, open, setOpen }
                         <Form.Input label='Title:' type='text' name='title' value={formik.values.title} onChange={formik.handleChange} />
                         {formik.errors.title ? <div className='error'>{formik.errors.title}</div> : null}
                         <br />
-                        
+
                         <Form.Input label='Places Visited:' type='text' name='visited_cities' value={formik.values.visited_cities} onChange={formik.handleChange} />
                         {formik.errors.visited_cities ? <div className='error'>{formik.errors.visited_cities}</div> : null}
                         <br />
-                        
+
                         <Form.Group widths={8}>
                             <Form.Input label='Duration (days):' type='number' name='duration' value={formik.values.duration} onChange={formik.handleChange} />
                             {formik.errors.duration ? <div className='error'>{formik.errors.duration}</div> : null}
                             <br />
-                            
+
                         </Form.Group>
                         <br />
-                        
+
                         <Form.TextArea label='Post:' type='text' name='body' value={formik.values.body} onChange={formik.handleChange} />
                         {formik.errors.body ? <div className='error'>{formik.errors.body}</div> : null}
                         <br />
+
+                        <Form.Input type='file' multiple onChange={handleFileInput} />
                         <Form.Button type="submit">Submit</Form.Button>
                     </Form>
                 </Modal.Description>

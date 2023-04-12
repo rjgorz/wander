@@ -13,8 +13,19 @@
     margin-bottom: 1rem !important;
 }
 
+.group_col {
+    width: 45%;
+    margin: 0 2vh 5vh 2vh;
+    padding: 2vh;
+    border: 1px lightgray solid;
+}
+
+.group_journal {
+    width: 100% !important;
+}
+
 #root > svg {
-    transform: translateY(-9vh);
+    transform: translateY(-20vh);
 }
 
 body > div.ui.page.modals.dimmer.transition.visible.active > div > div.actions > button {
