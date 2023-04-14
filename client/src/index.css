@@ -4,7 +4,7 @@
     display: inline-grid;
 }
 
-#root > div > div:nth-child(1) > div > div.sub.header {
+#root>div>div:nth-child(1)>div>div.sub.header {
     margin-left: 10px;
     display: inline-grid;
 }
@@ -24,11 +24,47 @@
     width: 100% !important;
 }
 
-#root > svg {
+.image_modal {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.journal_images {
+    cursor: pointer;
+    max-height: 20vh;
+    max-width: 40vh;
+    width: auto;
+    height: auto;
+    box-shadow: 3px 5px 5px gray;
+}
+
+.journal_image_modal {
+    max-height: 90vh;
+    max-width: 100vh;
+    width: auto;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.journal_images:hover {
+    transform: scale(1.05);
+}
+
+.image_container {
+    max-width: 75%;
+    max-height: 75%;
+    scroll-behavior: auto;
+}
+
+#root>svg {
     transform: translateY(-20vh);
 }
 
-body > div.ui.page.modals.dimmer.transition.visible.active > div > div.actions > button {
+body>div.ui.page.modals.dimmer.transition.visible.active>div>div.actions>button {
     color: white;
     background-color: #FFA83B;
 }
@@ -57,6 +93,7 @@ a :hover {
     background-color: black !important;
 }
 
-#root > div.ui.three.statistics > div:nth-child(1), #root > div.ui.three.statistics > div:nth-child(2) {
+#root>div.ui.three.statistics>div:nth-child(1),
+#root>div.ui.three.statistics>div:nth-child(2) {
     border-right: 1px lightgray solid;
 }

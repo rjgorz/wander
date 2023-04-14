@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Form, Modal, Header, Button, Icon } from "semantic-ui-react";
-import UserContext from './Context';
+import { Form, Modal, Header, Button, Icon, Popup } from "semantic-ui-react";
+import { Error } from "../styles";
 
 function EditJournalModal({ journal, open, setOpen, setRefresh, handleEdit }) {
-    const user = useContext(UserContext);
+    const [errors, setErrors] = useState([]);
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Must enter a title!"),
@@ -41,6 +41,8 @@ function EditJournalModal({ journal, open, setOpen, setRefresh, handleEdit }) {
                         setRefresh(prev => !prev);
                         setOpen(false);
                     })
+                } else {
+                    res.json().then((err) => setErrors([err.error]));
                 }
             })
         },
@@ -53,7 +55,9 @@ function EditJournalModal({ journal, open, setOpen, setRefresh, handleEdit }) {
             open={open}
             trigger={
                 <Button inverted icon floated='right'>
-                    <Icon size='small' name='edit' color='black' />
+                    <Popup content='Edit Journal' offset={[27, 0]} trigger={
+                        <Icon size='small' name='edit' color='black' />
+                    } />
                 </Button>
             }
         >
@@ -81,13 +85,18 @@ function EditJournalModal({ journal, open, setOpen, setRefresh, handleEdit }) {
                         <Form.TextArea label='Post:' type='text' name='body' value={formik.values.body} onChange={formik.handleChange} />
                         {formik.errors.body ? <div>{formik.errors.body}</div> : null}
                         <br />
+
+                        {errors.map((err) => (
+                            <Error key={err}>{err}</Error>
+                        ))}
+
                         <Form.Button type="submit">Submit</Form.Button>
                     </Form>
                 </Modal.Description>
             </Modal.Content>
             <Modal.Actions>
                 <Button
-                    content="Close Window"
+                    content="Exit"
                     labelPosition='right'
                     icon='close'
                     onClick={() => setOpen(false)}
@@ -99,8 +108,3 @@ function EditJournalModal({ journal, open, setOpen, setRefresh, handleEdit }) {
 }
 
 export default EditJournalModal;
-
-
-
-
-

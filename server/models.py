@@ -1,5 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 
 from config import db, bcrypt
@@ -24,6 +25,24 @@ class User(db.Model, SerializerMixin):
 
     states = association_proxy('journals', 'state')
     groups = association_proxy('user_groups', 'group')
+
+    # @validates('username')
+    # def validates_username(self, key, username):
+    #     if not username or len(username) < 6:
+    #         raise ValueError("Username must be at least 6 characters!")
+    #     return username
+    
+    @validates('first_name')
+    def validates_first_name(self, key, first_name):
+        if not first_name:
+            raise ValueError("Please provide your first name!")
+        return first_name
+    
+    @validates('last_name')
+    def validates_last_name(self, key, last_name):
+        if not last_name:
+            raise ValueError("Please provide your last name!")
+        return last_name
 
     @hybrid_property
     def password_hash(self):
@@ -90,14 +109,21 @@ class Journal(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     state_id = db.Column(db.Integer, db.ForeignKey('states.id'))
 
+    @validates('body')
+    def validates_body(self, key, body):
+        if not body or len(body) < 20:
+            raise ValueError("Post must be at least 20 characters long!")
+        return body
+
 class Image(db.Model, SerializerMixin):
     __tablename__ = 'images'
 
     serialize_rules = ('-journal.images', '-journal.user', '-journal.state',
+                       '-user.images', '-user.states', '-user.journals',
                        '-created_at', '-updated_at')
 
     id = db.Column(db.Integer, primary_key=True)
-    # file_path = db.Column(db.String)
+    file_name = db.Column(db.String, unique=True, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 

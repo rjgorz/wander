@@ -13,6 +13,7 @@ import { Card } from "semantic-ui-react";
 function App() {
   const [states, setStates] = useState([]);
   const [groups, setGroups] = useState([]);
+  const [images, setImages] = useState([]);
   const [currState, setCurrState] = useState({});
   const [userJournals, setUserJournals] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -50,6 +51,14 @@ function App() {
     })
   }, []);
 
+  useEffect(() => {
+    fetch(`/images/${user.id}`).then((r) => {
+      if (r.ok) {
+        r.json().then((imageData) => setImages(imageData))
+      }
+    })
+  }, [user]);
+
   function addJournal(newJournal) {
     setUserJournals([newJournal, ...userJournals]);
   }
@@ -81,7 +90,7 @@ function App() {
     setUserJournals(updatedJournals);
   }
 
-  const journals = userJournals.map(journal => <AllJournalEntry key={journal.id} journal={journal} handleDelete={handleDelete} handleEdit={handleEdit} setRefresh={setRefresh} />)
+  const journals = userJournals.map(journal => <AllJournalEntry key={journal.id} journal={journal} handleDelete={handleDelete} handleEdit={handleEdit} setRefresh={setRefresh} images={images} setImages={setImages} />)
 
   if (user.id === 0) {
     return <Login onLogin={setUser} />
@@ -96,7 +105,7 @@ function App() {
           <Route path={`/${currState}`}>
             <State currState={currState} states={states} addJournal={addJournal}
               userJournals={userJournals} setRefresh={setRefresh} handleDelete={handleDelete}
-              handleEdit={handleEdit} />
+              handleEdit={handleEdit} images={images} setImages={setImages} />
           </Route>
           <Route path='/my_journals'>
             {journals.length > 0 ? (
@@ -112,6 +121,10 @@ function App() {
           </Route>
           <Route path='/profile'>
             <Profile addGroup={addGroup} setRefresh={setRefresh} groups={groups} />
+          </Route>
+          <Route path='/images'>
+            <h1>PLACEHOLDER</h1>
+            {/* <AllUserImages /> */}
           </Route>
         </Switch>
       </UserContext.Provider>

@@ -20,10 +20,10 @@ function SignUpForm({ onLogin }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username,
-        password,
-        first_name,
-        last_name,
+        username: username,
+        password: password,
+        first_name: first_name,
+        last_name: last_name,
         password_confirmation: passwordConfirmation,
       }),
     }).then((r) => {
@@ -31,7 +31,7 @@ function SignUpForm({ onLogin }) {
       if (r.ok) {
         r.json().then((user) => onLogin(user));
       } else {
-        r.json().then((err) => setErrors(err.errors));
+        r.json().then((err) => setErrors([err.error]));
       }
     });
   }

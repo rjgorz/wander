@@ -3,14 +3,16 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { Form, Button, Modal, Header } from "semantic-ui-react";
 import UserContext from './Context';
+import { Error } from "../styles";
 
 function NewJournalForm({ addJournal, selectedState, setRefresh, open, setOpen }) {
     const user = useContext(UserContext);
     const [selectedFiles, setSelectedFiles] = useState([]);
+    const [errors, setErrors] = useState([]);
 
     function handleFileInput(event) {
         setSelectedFiles(event.target.files);
-    };
+    }
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Must enter a title!"),
@@ -33,6 +35,17 @@ function NewJournalForm({ addJournal, selectedState, setRefresh, open, setOpen }
 
         validationSchema: formSchema,
         onSubmit: (values) => {
+            setErrors([]);
+            const files = [...selectedFiles];
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                formData.append('files[]', files[i]);
+            }
+
+            for (const key of formData.entries()) {
+                console.log(key[0] + ', ' + key[1])
+            }
+
             fetch("/user_journals", {
                 method: "POST",
                 headers: {
@@ -42,11 +55,26 @@ function NewJournalForm({ addJournal, selectedState, setRefresh, open, setOpen }
             }).then((res) => {
                 if (res.ok) {
                     res.json().then(journal => {
+                        if (selectedFiles) {
+                            fetch(`/images_upload/${user.id}/${journal.id}`, {
+                                method: 'POST',
+                                body: formData
+                            }).then((res) => {
+                                if (res.ok) {
+                                    res.json().then(r => console.log(r))
+                                } else {
+                                    console.log(res)
+                                }
+                            })
+                        }
                         addJournal(journal);
                         setRefresh(prev => !prev);
                         user.states.push(selectedState);
                         setOpen(false);
                     })
+                } else {
+                    
+                    res.json().then((err) => setErrors([err.error]));
                 }
             })
         },
@@ -58,7 +86,7 @@ function NewJournalForm({ addJournal, selectedState, setRefresh, open, setOpen }
             onOpen={() => setOpen(true)}
             open={open}
             trigger={
-                <Button icon floated='left'>
+                <Button floated='left'>
                     Add New Journal
                 </Button>
             }
@@ -89,7 +117,12 @@ function NewJournalForm({ addJournal, selectedState, setRefresh, open, setOpen }
                         {formik.errors.body ? <div className='error'>{formik.errors.body}</div> : null}
                         <br />
 
-                        <Form.Input type='file' multiple onChange={handleFileInput} />
+                        <Form.Input label='Upload Images' type='file' name='files[]' accept="image/*" multiple onChange={handleFileInput} />
+
+                        {errors.map((err) => (
+                            <Error key={err}>{err}</Error>
+                        ))}
+
                         <Form.Button type="submit">Submit</Form.Button>
                     </Form>
                 </Modal.Description>
