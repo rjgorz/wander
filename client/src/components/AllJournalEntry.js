@@ -11,7 +11,7 @@ function AllJournalEntry({ journal, handleDelete, handleEdit, setRefresh, images
     const filteredImages = images.filter(image => journal.id === image.journal_id);
 
     const imageCards = filteredImages.map(image => {
-        return <ImageModal key={image.id} image={image} setRefresh={setRefresh} />
+        return <ImageModal key={image.id} image={image} setRefresh={setRefresh} setImages={setImages} />
     });
 
     return (

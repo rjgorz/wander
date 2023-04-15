@@ -41,7 +41,7 @@ function App() {
         r.json().then((stateData) => setStates(stateData))
       }
     })
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     fetch("/groups").then((r) => {

@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { Image, Modal, Button, Icon } from "semantic-ui-react";
 
-function ImageModal({ image, setRefresh }) {
+function ImageModal({ image, setRefresh, setImages }) {
     const [open, setOpen] = useState(false);
 
     function handleDeletePhoto() {
         fetch(`/image/${image.id}`, {
             method: 'DELETE',
         })
-        .then(r => r.json())
-        .then(r => {
-            setOpen(false);
-            setRefresh(prev => !prev)
-        })
+            .then(r => r.json())
+            .then(r => {
+                setOpen(false);
+                setImages((imageData) =>
+                    imageData.filter((item) => item.id !== image.id)
+                );
+                setRefresh(prev => !prev)
+            })
     }
 
     return (
@@ -21,7 +24,7 @@ function ImageModal({ image, setRefresh }) {
             onOpen={() => setOpen(true)}
             open={open}
             trigger={
-                    <Image className='journal_images' src={`/serve_image/${image.file_name}`} rounded fluid />
+                <Image className='journal_images' src={`/serve_image/${image.file_name}`} rounded fluid />
             }>
             <Modal.Content>
                 <Button inverted icon floated='right' onClick={handleDeletePhoto}>
