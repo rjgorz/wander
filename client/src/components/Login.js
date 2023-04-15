@@ -3,37 +3,40 @@ import styled from "styled-components";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import { Button } from "../styles";
+import { Card } from "semantic-ui-react";
 
 function Login({ onLogin }) {
   const [showLogin, setShowLogin] = useState(true);
 
   return (
-    <Wrapper>
-      <Logo>Wander</Logo>
-      {showLogin ? (
-        <>
-          <LoginForm onLogin={onLogin} />
-          <Divider />
-          <p>
-            Don't have an account? &nbsp;
-            <Button color="secondary" onClick={() => setShowLogin(false)}>
-              Sign Up
-            </Button>
-          </p>
-        </>
-      ) : (
-        <>
-          <SignUpForm onLogin={onLogin} />
-          <Divider />
-          <p>
-            Already have an account? &nbsp;
-            <Button color="secondary" onClick={() => setShowLogin(true)}>
-              Log In
-            </Button>
-          </p>
-        </>
-      )}
-    </Wrapper>
+    <Card id='login_page' fluid>
+      <Wrapper>
+        <Logo>Wander</Logo>
+        {showLogin ? (
+          <>
+            <LoginForm onLogin={onLogin} />
+            <Divider />
+            <p>
+              Don't have an account? &nbsp;
+              <Button color="secondary" onClick={() => setShowLogin(false)}>
+                Sign Up
+              </Button>
+            </p>
+          </>
+        ) : (
+          <>
+            <SignUpForm onLogin={onLogin} />
+            <Divider />
+            <p>
+              Already have an account? &nbsp;
+              <Button color="secondary" onClick={() => setShowLogin(true)}>
+                Log In
+              </Button>
+            </p>
+          </>
+        )}
+      </Wrapper>
+    </Card>
   );
 }
 

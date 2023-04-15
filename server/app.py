@@ -292,7 +292,7 @@ class Login(Resource):
                     200
                 )
 
-        return make_response({'error': '401 Unauthorized'}, 401)
+        return make_response({'error': 'Incorrect username/password.'}, 401)
 api.add_resource(Login, '/login', endpoint='login')
 
 
@@ -308,3 +308,4 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+    

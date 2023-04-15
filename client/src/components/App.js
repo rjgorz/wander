@@ -8,6 +8,7 @@ import Profile from "./Profile";
 import GroupJournals from "./GroupJournals";
 import AllJournalEntry from "./AllJournalEntry";
 import UserContext from './Context';
+import AllUserImages from "./AllUserImages";
 import { Card } from "semantic-ui-react";
 
 function App() {
@@ -97,34 +98,35 @@ function App() {
   } else {
     return (
       <UserContext.Provider value={user}>
-        <Nav setUser={setUser} />
+        <div>
+          <Nav setUser={setUser} />
+        </div>
         <Switch>
           <Route exact path='/'>
             <USMap currState={currState} setCurrState={setCurrState} setUserJournals={setUserJournals} />
           </Route>
-          <Route path={`/${currState}`}>
+          <Route exact path={`/${currState}`}>
             <State currState={currState} states={states} addJournal={addJournal}
               userJournals={userJournals} setRefresh={setRefresh} handleDelete={handleDelete}
               handleEdit={handleEdit} images={images} setImages={setImages} />
           </Route>
-          <Route path='/my_journals'>
+          <Route exact path='/my_journals'>
             {journals.length > 0 ? (
               <Card.Group itemsPerRow={2}>
                 {journals}
               </Card.Group>
             ) : <h2>No journal entries yet!</h2>}
           </Route>
-          <Route path='/group_journals'>
-            <Card.Group >
+          <Route exact path='/group_journals'>
+            <Card.Group>
               <GroupJournals />
             </Card.Group>
           </Route>
-          <Route path='/profile'>
+          <Route exact path='/profile'>
             <Profile addGroup={addGroup} setRefresh={setRefresh} groups={groups} />
           </Route>
-          <Route path='/images'>
-            <h1>PLACEHOLDER</h1>
-            {/* <AllUserImages /> */}
+          <Route exact path='/images'>
+            <AllUserImages images={images} setRefresh={setRefresh} setImages={setImages} />
           </Route>
         </Switch>
       </UserContext.Provider>

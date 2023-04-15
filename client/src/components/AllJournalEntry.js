@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import EditJournalModal from './EditJournalModal';
 import ImageModal from './ImageModal';
 import AddImagesModal from './AddImagesModal';
-import { Card, Icon, Divider, Button, Image, Popup, Container } from 'semantic-ui-react';
+import { Card, Icon, Divider, Button, Grid, Popup, Container } from 'semantic-ui-react';
 
 function AllJournalEntry({ journal, handleDelete, handleEdit, setRefresh, images, setImages }) {
     const [open, setOpen] = useState(false);
@@ -24,7 +24,7 @@ function AllJournalEntry({ journal, handleDelete, handleEdit, setRefresh, images
                     <EditJournalModal journal={journal} open={open} setOpen={setOpen} handleEdit={handleEdit} setRefresh={setRefresh} />
                     <Button inverted icon floated='right' onClick={() => handleDelete(journal.id)}>
                         <Popup content='Delete Journal' offset={[28, 0]} trigger={
-                            <Icon size='small' name='trash alternate outline' color='black' />
+                            <Icon size='small' name='trash alternate' color='black' />
                         } />
                     </Button>
                 </Card.Header>
@@ -36,9 +36,11 @@ function AllJournalEntry({ journal, handleDelete, handleEdit, setRefresh, images
                     {body}
                 </Card.Description>
                 <Container textAlign='center'>
-                    <Image.Group size='small'>
+                    {/* <Image.Group size='small'> */}
+                    <Grid columns={4}>
                         {imageCards}
-                    </Image.Group>
+                    </Grid>
+                    {/* </Image.Group> */}
                 </Container>
             </Card.Content>
         </Card>

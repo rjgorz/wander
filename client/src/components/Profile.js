@@ -66,7 +66,7 @@ function Profile({ addGroup, setRefresh, groups }) {
                 </Statistic>
                 <Statistic>
                     <Statistic.Value>
-                        <Icon name='calendar alternate outline' size='small' />
+                        <Icon name='calendar alternate' size='small' />
                         {' ' + avg}
                     </Statistic.Value>
                     <Statistic.Label>Average</Statistic.Label>

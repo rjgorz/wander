@@ -1,23 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 #title {
     font-family: 'Pacifico', cursive;
     font-size: 72px;
     display: inline-grid;
 }
 
-#root>div>div:nth-child(1)>div>div.sub.header {
+#login_page {
+    background-image: linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255, 1)), url('./image/snazzy-image.png');
+    height: 90vh;
+    justify-content: center;
+}
+
+#root > div:nth-child(2) > div > div.ui.sticky > h2 {
+    width: max-content;
+}
+#root > div:nth-child(1) > div > div:nth-child(1) > div > div.sub.header {
     margin-left: 10px;
     display: inline-grid;
 }
 
 .header {
+    background-color: white !important;
     margin-bottom: 1rem !important;
+}
+
+.menu {
+    background-color: white !important;
 }
 
 .group_col {
     width: 45%;
+    height: max-content;
     margin: 0 2vh 5vh 2vh;
     padding: 2vh;
     border: 1px lightgray solid;
+    border-radius: 5px;
+    box-shadow: 1px 3px 5px lightgray;
 }
 
 .group_journal {
@@ -30,6 +51,17 @@
     margin-right: auto;
     width: 50%;
 }
+body > div.ui.page.modals.dimmer.transition.visible.active > div > div.content {
+    margin: 0 !important;
+}
+
+.content {
+    margin: 0 30px 0 10px !important;
+}
+
+/* .imageContainer {
+    display: grid;
+} */
 
 .journal_images {
     cursor: pointer;
@@ -38,11 +70,12 @@
     width: auto;
     height: auto;
     box-shadow: 3px 5px 5px gray;
+    margin: 10px;
 }
 
 .journal_image_modal {
     max-height: 90vh;
-    max-width: 100vh;
+    max-width: 50vh;
     width: auto;
     height: auto;
     display: block;
@@ -51,7 +84,8 @@
 }
 
 .journal_images:hover {
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
+    opacity: 90%;
 }
 
 .image_container {
@@ -60,7 +94,7 @@
     scroll-behavior: auto;
 }
 
-#root>svg {
+#root > div:nth-child(2) > svg {
     transform: translateY(-20vh);
 }
 

@@ -8,7 +8,7 @@ import {
   Marker,
   Annotation
 } from "react-simple-maps";
-import { Popup } from "semantic-ui-react";
+import { Sticky } from "semantic-ui-react";
 import UserContext from "./Context"
 
 
@@ -50,9 +50,10 @@ const MapChart = ({ currState, setCurrState, setUserJournals }) => {
 
     return (
       <div>
-        <h2>{currState ? `${currState}` : 'Select a State!'}</h2>
+        <Sticky offset={70}>
+          <h2>{currState ? `${currState}` : 'Select a State!'}</h2>
+        </Sticky>
         <ComposableMap projection="geoAlbersUsa">
-
           <Geographies geography={geoUrl}>
             {({ geographies }) => (
               <>
@@ -84,7 +85,10 @@ const MapChart = ({ currState, setCurrState, setUserJournals }) => {
                   const cur = allStates.find(s => s.val === geo.id);
                   return (
                     <Link to={geo.properties.name} key={geo.rsmKey + "-name"}>
-                      <g onMouseEnter={() => setCurrState(geo.properties.name)}>
+                      <g
+                        onMouseEnter={() => setCurrState(geo.properties.name)}
+                        onMouseLeave={() => setCurrState(null)}
+                      >
                         {cur &&
                           centroid[0] > -160 &&
                           centroid[0] < -67 &&

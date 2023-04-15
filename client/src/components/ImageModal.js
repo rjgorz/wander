@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, Modal, Button, Icon } from "semantic-ui-react";
+import { Image, Modal, Button, Icon, Grid } from "semantic-ui-react";
 
 function ImageModal({ image, setRefresh, setImages }) {
     const [open, setOpen] = useState(false);
@@ -19,6 +19,9 @@ function ImageModal({ image, setRefresh, setImages }) {
     }
 
     return (
+        <Grid.Column>
+
+        
         <Modal className='image_modal'
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
@@ -27,6 +30,7 @@ function ImageModal({ image, setRefresh, setImages }) {
                 <Image className='journal_images' src={`/serve_image/${image.file_name}`} rounded fluid />
             }>
             <Modal.Content>
+                
                 <Button inverted icon floated='right' onClick={handleDeletePhoto}>
                     <Icon name='trash alternate' color='black' />
                 </Button>
@@ -42,6 +46,7 @@ function ImageModal({ image, setRefresh, setImages }) {
                 />
             </Modal.Actions>
         </Modal>
+        </Grid.Column>
     )
 }
 

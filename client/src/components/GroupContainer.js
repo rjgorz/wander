@@ -9,7 +9,7 @@ function GroupContainer({ group }) {
         if(groupUser.id !== user.id) 
             return <UserContainer key={groupUser.id} groupUser={groupUser} />
         else if(groupUser.id === user.id)
-            return
+            return null
         else
             return <h2>No Entries!</h2>
             

@@ -43,7 +43,7 @@ function AddImagesModal({ journal, setRefresh, images, setImages }) {
             trigger={
                 <Button icon inverted floated='right'>
                     <Popup content='Add Photos' offset={[31, 0]} trigger={
-                        <Icon name="images outline" color='black' />
+                        <Icon name="images" color='black' />
                     } />
                 </Button>
             }
