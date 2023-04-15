@@ -14,7 +14,7 @@ function App() {
   const [states, setStates] = useState([]);
   const [groups, setGroups] = useState([]);
   const [images, setImages] = useState([]);
-  const [currState, setCurrState] = useState({});
+  const [currState, setCurrState] = useState(null);
   const [userJournals, setUserJournals] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [user, setUser] = useState({
