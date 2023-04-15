@@ -22,6 +22,12 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+class Index(Resource):
+    def get(self):
+        return(
+            'Welcome to Wander'
+        )
+
 class States(Resource):
     def get(self):
         state_dicts = [state.to_dict() for state in State.query.all()]
