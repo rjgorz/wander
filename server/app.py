@@ -52,8 +52,6 @@ class UserJournalsById(Resource):
 api.add_resource(UserJournalsById, '/user_journals/<int:id>')
 
 # To post a new journal, regardless of which state the user is in
-
-
 class Journals(Resource):
     def post(self):
         try:
@@ -80,7 +78,6 @@ class Journals(Resource):
                 400
             )
 api.add_resource(Journals, '/user_journals')
-
 
 class JournalById(Resource):
     def delete(self, id):
@@ -125,6 +122,9 @@ class JournalById(Resource):
 api.add_resource(JournalById, '/user_journals/<int:id>')
 
 
+############################################################
+#                      GROUP ROUTES                        #
+############################################################
 class Groups(Resource):
     def get(self):
         group_dicts = [group.to_dict(rules=(('users',)))
@@ -149,7 +149,6 @@ class Groups(Resource):
         )
 api.add_resource(Groups, '/groups')
 
-
 class UserGroups(Resource):
     def post(self):
         new_ug = UserGroup(
@@ -166,7 +165,22 @@ class UserGroups(Resource):
         )
 api.add_resource(UserGroups, '/user_groups')
 
+class UserGroupById(Resource):
+    def delete(self, user_id, group_id):
+        groups = UserGroup.query.filter(UserGroup.user_id == user_id).all()
+        
+        for group in groups:
+            if group.group_id == group_id:
+                db.session.delete(group)
+                db.session.commit()
 
+        return make_response({ 'success': 'Group successfully left' }, 200)
+api.add_resource(UserGroupById, '/user_groups/<int:user_id>/<int:group_id>')
+
+
+############################################################
+#                      IMAGE ROUTES                        #
+############################################################
 class ImagesByIds(Resource):
     def post(self, userID, journalID):
         files = request.files.getlist('files[]')
@@ -184,7 +198,6 @@ class ImagesByIds(Resource):
 
         return make_response({'message': 'Image files added successfully'}, 201)
 api.add_resource(ImagesByIds, '/images_upload/<int:userID>/<int:journalID>')
-
 
 class ImagesByUser(Resource):
     def get(self, userID):
@@ -217,6 +230,9 @@ class ServeImage(Resource):
 api.add_resource(ServeImage, '/serve_image/<filename>')
 
 
+############################################################
+#                   USER LOGIN/LOGOUT                      #
+############################################################
 class Signup(Resource):
     def post(self):
         try:
@@ -253,7 +269,6 @@ class Signup(Resource):
             return make_response({'error': 'Please provide a first & last name!'}, 400)
 api.add_resource(Signup, '/signup', endpoint='signup')
 
-
 class CheckSession(Resource):
     def get(self):
 
@@ -271,7 +286,6 @@ class CheckSession(Resource):
 
         # return None
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
-
 
 class Login(Resource):
     def post(self):
@@ -295,7 +309,6 @@ class Login(Resource):
         return make_response({'error': 'Incorrect username/password.'}, 401)
 api.add_resource(Login, '/login', endpoint='login')
 
-
 class Logout(Resource):
     def delete(self):
         if session.get('user_id'):
@@ -306,6 +319,6 @@ class Logout(Resource):
         return make_response({'error': '401 Unauthorized'}, 401)
 api.add_resource(Logout, '/logout', endpoint='logout')
 
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
-    

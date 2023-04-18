@@ -1,9 +1,9 @@
-import React from "react";
+// import React from "react";
 import { Grid } from "semantic-ui-react"
 import ImageModal from "./ImageModal";
 
 function AllUserImages({ images, setRefresh, setImages }) {
-    const imageCards = images.map(image => <ImageModal image={image} setRefresh={setRefresh} setImages={setImages} />)
+    const imageCards = images.map(image => <ImageModal key={image.id} image={image} setRefresh={setRefresh} setImages={setImages} />)
 
     return (
         // <div className='imageContainer'>

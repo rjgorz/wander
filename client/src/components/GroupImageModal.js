@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Image, Modal, Button, Grid } from "semantic-ui-react";
 
 function GroupImageModal({ image }) {

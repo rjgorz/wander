@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Image, Modal, Button, Icon, Grid, Popup } from "semantic-ui-react";
 
 function ImageModal({ image, setRefresh, setImages }) {

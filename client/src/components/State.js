@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, Divider } from 'semantic-ui-react';
 import NewJournalForm from './NewJournalForm';
 import StateJournalEntry from './StateJournalEntry';

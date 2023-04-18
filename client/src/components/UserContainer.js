@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import UserContext from './Context';
 import GroupJournalEntry from './GroupJournalEntry';
 
@@ -19,8 +19,6 @@ function UserContainer({ groupUser }) {
             entries.push(entry);
         }
     }
-
-    console.log(entries)
 
     return (
         <>

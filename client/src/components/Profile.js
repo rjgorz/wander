@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import UserContext from './Context';
 import JoinGroup from './JoinGroup';
 import CreateGroup from './CreateGroup';
@@ -22,7 +22,15 @@ function Profile({ addGroup, setRefresh, groups }) {
     }
     avg = avg / user.journals.length;
 
-    console.log(user)
+    function handleLeave(groupId) {
+        fetch(`/user_groups/${user.id}/${groupId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        }).then(r => {
+            console.log(r);
+            setRefresh(prev => !prev);
+        });
+    }
 
     const userGroups = user.groups.map(group => {
         const len = group.users.length;
@@ -31,8 +39,12 @@ function Profile({ addGroup, setRefresh, groups }) {
                 <List.Item>
                     <List.Content>
                         <List.Header>{group.group_name}</List.Header>
-                        <List.Description><em>{len} {len === 1 ? 'Member' : 'Members'}</em></List.Description>
+                        <List.Description>
+                            <em>{len} {len === 1 ? 'Member' : 'Members'}</em>
+                        </List.Description>
                         <br />
+                        <Button size='tiny' onClick={() => handleLeave(group.id)}>Leave Group</Button>
+                        <br /><br /><br />
                     </List.Content>
                 </List.Item>
             </List>

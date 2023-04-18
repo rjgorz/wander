@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Modal, Button, Icon, Form, Header, Popup } from "semantic-ui-react";
 import UserContext from "./Context";
 

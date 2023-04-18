@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Form, Button, Modal, Header } from "semantic-ui-react";

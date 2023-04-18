@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import EditJournalModal from './EditJournalModal';
 import ImageModal from './ImageModal';
 import AddImagesModal from './AddImagesModal';

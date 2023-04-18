@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import Nav from "./Nav";
 import USMap from "./USMap";

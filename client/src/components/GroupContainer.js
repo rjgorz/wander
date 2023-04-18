@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import UserContainer from "./UserContainer";
 import UserContext from './Context';
 

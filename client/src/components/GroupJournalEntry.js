@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Icon, Divider, Container, Grid } from 'semantic-ui-react';
 import GroupImageModal from './GroupImageModal';
 
@@ -23,7 +23,7 @@ function GroupJournalEntry({ journal, groupUser }) {
     return (
         <Card raised className='group_journal'>
             <Card.Content>
-                <Card.Header icon as='h1'>
+                <Card.Header as='h1'>
                     <Icon name='plane' />
                     {title}
                 </Card.Header>
