@@ -2,10 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body, #root {
+    height: 100vh;
+}
+
 #title {
     font-family: 'Pacifico', cursive;
-    font-size: 72px;
+    font-size: 84px;
     display: inline-grid;
+}
+
+.button.ui.button, body > div.ui.page.modals.dimmer.transition.visible.active > div > div.actions > button {
+    background-color: #FFA83B !important;
+    color: white;
+}
+
+.button.ui.icon.button, body > div.ui.page.modals.dimmer.transition.visible.active > div > div.actions > button.ui.icon.inverted.left.floated.button {
+    background-color: white !important;
 }
 
 #login_page {
@@ -58,10 +71,6 @@ body > div.ui.page.modals.dimmer.transition.visible.active > div > div.content {
 .content {
     margin: 0 30px 0 10px !important;
 }
-
-/* .imageContainer {
-    display: grid;
-} */
 
 .journal_images {
     cursor: pointer;
@@ -131,3 +140,26 @@ a :hover {
 #root>div.ui.three.statistics>div:nth-child(2) {
     border-right: 1px lightgray solid;
 }
+
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: whitesmoke;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #FFA83B;
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ffbb68;
+  }

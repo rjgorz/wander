@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, Modal, Button, Icon, Grid } from "semantic-ui-react";
+import { Image, Modal, Button, Icon, Grid, Popup } from "semantic-ui-react";
 
 function ImageModal({ image, setRefresh, setImages }) {
     const [open, setOpen] = useState(false);
@@ -20,32 +20,31 @@ function ImageModal({ image, setRefresh, setImages }) {
 
     return (
         <Grid.Column>
-
-        
-        <Modal className='image_modal'
-            onClose={() => setOpen(false)}
-            onOpen={() => setOpen(true)}
-            open={open}
-            trigger={
-                <Image className='journal_images' src={`/serve_image/${image.file_name}`} rounded fluid />
-            }>
-            <Modal.Content>
-                
-                <Button inverted icon floated='right' onClick={handleDeletePhoto}>
-                    <Icon name='trash alternate' color='black' />
-                </Button>
-                <Image className='journal_image_modal' src={`/serve_image/${image.file_name}`} rounded />
-            </Modal.Content>
-            <Modal.Actions>
-                <Button
-                    content="Exit"
-                    labelPosition='right'
-                    icon='close'
-                    onClick={() => setOpen(false)}
-                    positive
-                />
-            </Modal.Actions>
-        </Modal>
+            <Modal className='image_modal'
+                onClose={() => setOpen(false)}
+                onOpen={() => setOpen(true)}
+                open={open}
+                trigger={
+                    <Image className='journal_images' src={`/serve_image/${image.file_name}`} rounded fluid />
+                }>
+                <Modal.Content>
+                    <Image className='journal_image_modal' src={`/serve_image/${image.file_name}`} rounded />
+                </Modal.Content>
+                <Modal.Actions>
+                <Popup position='right center' content='Delete Photo' offset={[0, 30]} trigger={
+                        <Button inverted icon floated='left' onClick={handleDeletePhoto}>
+                            <Icon name='trash alternate' color='black' />
+                        </Button>
+                    } />
+                    <Button
+                        content="Exit"
+                        labelPosition='right'
+                        icon='close'
+                        onClick={() => setOpen(false)}
+                        positive
+                    />
+                </Modal.Actions>
+            </Modal>
         </Grid.Column>
     )
 }

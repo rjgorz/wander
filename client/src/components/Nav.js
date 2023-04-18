@@ -1,11 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, createRef } from "react";
 import { Link } from "react-router-dom";
 import { Menu, Header, Sticky } from "semantic-ui-react";
 import UserContext from './Context';
 
 function Nav({ setUser }) {
     const user = useContext(UserContext);
-    const [active, setActive] = useState('');
+    const [active, setActive] = useState('map');
 
     function handleItemClick(name) {
         setActive(name);
@@ -39,13 +39,13 @@ function Nav({ setUser }) {
                 </Header>
             </div>
             <Sticky>
-                <Menu tabular style={style}>
+                <Menu pointing secondary style={style}>
                     <Menu.Item link
                         as={Link}
                         to='/'
                         name='map'
-                        active={active === 'home'}
-                        onClick={() => handleItemClick('home')}
+                        active={active === 'map'}
+                        onClick={() => handleItemClick('map')}
                     />
                     <Menu.Item link
                         as={Link}
