@@ -8,6 +8,7 @@ from flask import request, session, make_response, jsonify, send_from_directory
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from werkzeug.utils import secure_filename
+from datetime import datetime
 
 # Local imports
 from config import app, db, api
@@ -183,13 +184,15 @@ api.add_resource(UserGroupById, '/user_groups/<int:user_id>/<int:group_id>')
 ############################################################
 class ImagesByIds(Resource):
     def post(self, userID, journalID):
+        now = datetime.now()
+        
         files = request.files.getlist('files[]')
         for file in files:
+            print(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(now.strftime("%y%m%d%H%M%S") + file.filename)))
             if allowed_file(file.filename):
-                file.save(os.path.join(
-                    app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(now.strftime("%y%m%d%H%M%S") + file.filename)))
                 new_image = Image(
-                    file_name=secure_filename(file.filename),
+                    file_name=secure_filename(now.strftime("%y%m%d%H%M%S") + file.filename),
                     user_id=userID,
                     journal_id=journalID
                 )

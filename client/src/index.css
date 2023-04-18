@@ -1,6 +1,6 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 html, body, #root {
     height: 100vh;
@@ -10,6 +10,13 @@ html, body, #root {
     font-family: 'Pacifico', cursive;
     font-size: 84px;
     display: inline-grid;
+}
+
+#journal-icon {
+    background-image: url('./localImages/icons8-journal-64.png');
+    height: 64px;
+    width: 64px;
+    display: inline-block;
 }
 
 .button.ui.button, body > div.ui.page.modals.dimmer.transition.visible.active > div > div.actions > button {
@@ -22,7 +29,7 @@ html, body, #root {
 }
 
 #login_page {
-    background-image: linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255, 1)), url('./image/snazzy-image.png');
+    background-image: linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255, 1)), url('./localImages/snazzy-image.png');
     height: 90vh;
     justify-content: center;
 }

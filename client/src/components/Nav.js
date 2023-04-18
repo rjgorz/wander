@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Header, Sticky } from "semantic-ui-react";
+import { Menu, Header, Image, Sticky } from "semantic-ui-react";
 import UserContext from './Context';
 
 function Nav({ setUser }) {
@@ -31,6 +31,7 @@ function Nav({ setUser }) {
         <div className='nav-bar'>
             <div>
                 <Header>
+                    <div id='journal-icon'></div>
                     <div id='title'>Wander</div>
                     <br />
                     <Header.Subheader>
