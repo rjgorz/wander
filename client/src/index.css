@@ -1,6 +1,11 @@
 /* @tailwind base;
 @tailwind components;
 @tailwind utilities; */
+html {
+    font-family: system-ui, sans-serif;
+    font-size: 1.25rem;
+    margin: 3rem;
+}
 
 #root {
     height: 90vh;
@@ -23,6 +28,7 @@
     background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 1)), url('./localImages/background-image.png');
     background-attachment: fixed;
     min-height: 100vh;
+    /* background-repeat:repeat-x; */
     /* background-size: cover; */
 }
 
@@ -157,6 +163,7 @@ body>div.ui.page.modals.dimmer.transition.visible.active>div>div.content {
 
 .header.card-header {
     width: 100%;
+    padding-bottom: 0 !important;
 }
 
 body>div.ui.page.modals.dimmer.transition.visible.active>div>div.actions>button {
@@ -166,12 +173,6 @@ body>div.ui.page.modals.dimmer.transition.visible.active>div>div.actions>button 
 
 .error {
     color: red;
-}
-
-html {
-    font-family: system-ui, sans-serif;
-    font-size: 1.25rem;
-    margin: 3rem;
 }
 
 svg {
@@ -188,7 +189,10 @@ a :hover {
     border-right: 1px lightgray solid;
 }
 
-
+.sub.header {
+    margin-top: 0.5vw !important;
+    margin-left: 5.5vw !important;
+}
 
 /* width */
 ::-webkit-scrollbar {

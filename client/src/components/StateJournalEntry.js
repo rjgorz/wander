@@ -32,7 +32,7 @@ function StateJournalEntry({ journal, handleDelete, handleEdit, setRefresh, imag
                 <Card.Meta>
                     {visited_cities + ' | ' + duration + ' days'}
                 </Card.Meta>
-                <Card.Description style={{ margin: '10px 0 20px 0' }}>
+                <Card.Description style={{ margin: '10px 0 20px 0', paddingBottom: '20px' }}>
                     {body}
                 </Card.Description>
                 <Container textAlign='center'>
