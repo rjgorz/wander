@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities; */
 
-html, body, #root {
-    height: 100vh;
+#root {
+    height: 90vh;
 }
 
 #title {
@@ -19,50 +19,90 @@ html, body, #root {
     display: inline-block;
 }
 
-.button.ui.button, body > div.ui.page.modals.dimmer.transition.visible.active > div > div.actions > button {
+#overall-background {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 1)), url('./localImages/background-image.png');
+    background-attachment: fixed;
+    min-height: 100vh;
+    /* background-size: cover; */
+}
+
+.button.ui.button,
+body>div.ui.page.modals.dimmer.transition.visible.active>div>div.actions>button {
     background-color: #FFA83B !important;
     color: white;
 }
 
-.button.ui.icon.button, body > div.ui.page.modals.dimmer.transition.visible.active > div > div.actions > button.ui.icon.inverted.left.floated.button {
+.button.ui.icon.button,
+body>div.ui.page.modals.dimmer.transition.visible.active>div>div.actions>button.ui.icon.inverted.left.floated.button {
     background-color: white !important;
 }
 
 #login_page {
-    background-image: linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255, 1)), url('./localImages/snazzy-image.png');
+    background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 1)), url('./localImages/snazzy-image.png');
     height: 90vh;
     justify-content: center;
 }
 
-#root > div:nth-child(2) > div > div.ui.sticky > h2 {
+#root>div:nth-child(2)>div>div.ui.sticky>h2 {
     width: max-content;
 }
-#root > div:nth-child(1) > div > div:nth-child(1) > div > div.sub.header {
-    margin-left: 10px;
+
+#root>div:nth-child(1)>div>div:nth-child(1)>div>div.sub.header {
+    margin-left: 7%;
     display: inline-grid;
+}
+
+.header.wander {
+    width: 100%;
 }
 
 .header {
     background-color: white !important;
-    margin-bottom: 1rem !important;
+    width: max-content;
+    padding-bottom: 1rem !important;
 }
 
 .menu {
     background-color: white !important;
 }
 
+.group-container {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    align-content: stretch !important;
+    margin-top: 25px !important;
+}
+
 .group_col {
-    width: 45%;
-    height: max-content;
-    margin: 0 2vh 5vh 2vh;
-    padding: 2vh;
-    border: 1px lightgray solid;
-    border-radius: 5px;
-    box-shadow: 1px 3px 5px lightgray;
+    background-color: white !important;
+}
+
+.state-selector {
+    background-color: white;
+    width: max-content;
+}
+
+.group_col, .my_journal {
+    width: 47% !important;
+    height: max-content !important;
+    margin: 0 2vh 2vh 2vh !important;
+    padding: 2vh !important;
+    border: 1px lightgray solid !important;
+    border-radius: 5px !important;
+    box-shadow: 1px 3px 5px lightgray !important;
 }
 
 .group_journal {
+    display: flex;
     width: 100% !important;
+    padding-bottom: 15px !important;
+}
+
+.description {
+    margin-bottom: 10px !important;
 }
 
 .image_modal {
@@ -71,7 +111,8 @@ html, body, #root {
     margin-right: auto;
     width: 50%;
 }
-body > div.ui.page.modals.dimmer.transition.visible.active > div > div.content {
+
+body>div.ui.page.modals.dimmer.transition.visible.active>div>div.content {
     margin: 0 !important;
 }
 
@@ -81,8 +122,8 @@ body > div.ui.page.modals.dimmer.transition.visible.active > div > div.content {
 
 .journal_images {
     cursor: pointer;
-    max-height: 20vh;
-    max-width: 40vh;
+    max-height: 40vh;
+    max-width: 20vh;
     width: auto;
     height: auto;
     box-shadow: 3px 5px 5px gray;
@@ -110,8 +151,12 @@ body > div.ui.page.modals.dimmer.transition.visible.active > div > div.content {
     scroll-behavior: auto;
 }
 
-#root > div:nth-child(2) > svg {
+#overall-background > div:nth-child(2) > svg {
     transform: translateY(-20vh);
+}
+
+.header.card-header {
+    width: 100%;
 }
 
 body>div.ui.page.modals.dimmer.transition.visible.active>div>div.actions>button {
@@ -127,11 +172,6 @@ html {
     font-family: system-ui, sans-serif;
     font-size: 1.25rem;
     margin: 3rem;
-}
-
-body {
-    margin: 0;
-    padding: 0 1.5rem;
 }
 
 svg {
@@ -153,20 +193,21 @@ a :hover {
 /* width */
 ::-webkit-scrollbar {
     width: 12px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
+}
+
+/* Track */
+::-webkit-scrollbar-track {
     background: whitesmoke;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: #FFA83B;
     border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
     background: #ffbb68;
-  }
+}
+

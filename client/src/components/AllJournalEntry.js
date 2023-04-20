@@ -15,9 +15,9 @@ function AllJournalEntry({ journal, handleDelete, handleEdit, setRefresh, images
     });
 
     return (
-        <Card raised>
+        <Card raised className='my_journal'>
             <Card.Content>
-                <Card.Header as='h1'>
+                <Card.Header as='h1' className='card-header'>
                     <Icon name='plane' />
                     {title}
                     <AddImagesModal journal={journal} setRefresh={setRefresh} images={images} setImages={setImages} />
@@ -36,11 +36,9 @@ function AllJournalEntry({ journal, handleDelete, handleEdit, setRefresh, images
                     {body}
                 </Card.Description>
                 <Container textAlign='center'>
-                    {/* <Image.Group size='small'> */}
-                    <Grid columns={4}>
+                    <Grid columns={3}>
                         {imageCards}
                     </Grid>
-                    {/* </Image.Group> */}
                 </Container>
             </Card.Content>
         </Card>

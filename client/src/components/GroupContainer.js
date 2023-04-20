@@ -1,11 +1,9 @@
-import { useContext, useState } from "react";
-import { Accordion, Icon } from "semantic-ui-react";
+import { useContext } from "react";
 import UserContainer from "./UserContainer";
 import UserContext from './Context';
 
 function GroupContainer({ group }) {
     const user = useContext(UserContext);
-    const [activeIndex, setActiveIndex] = useState(-1);
 
     const groupUsers = group.users.map(groupUser => {
         if (groupUser.id !== user.id)

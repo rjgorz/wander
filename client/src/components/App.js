@@ -97,39 +97,42 @@ function App() {
     return <Login onLogin={setUser} />
   } else {
     return (
+      <div id='overall-background'>
       <UserContext.Provider value={user}>
         <div>
           <Nav setUser={setUser} />
         </div>
-        <Switch>
-          <Route exact path='/'>
-            <USMap currState={currState} setCurrState={setCurrState} setUserJournals={setUserJournals} />
-          </Route>
-          <Route exact path={`/${currState}`}>
-            <State currState={currState} states={states} addJournal={addJournal}
-              userJournals={userJournals} setRefresh={setRefresh} handleDelete={handleDelete}
-              handleEdit={handleEdit} images={images} setImages={setImages} />
-          </Route>
-          <Route exact path='/my_journals'>
-            {journals.length > 0 ? (
-              <Card.Group itemsPerRow={2}>
-                {journals}
+        
+          <Switch>
+            <Route exact path='/'>
+              <USMap currState={currState} setCurrState={setCurrState} setUserJournals={setUserJournals} />
+            </Route>
+            <Route exact path={`/${currState}`}>
+              <State currState={currState} states={states} addJournal={addJournal}
+                userJournals={userJournals} setRefresh={setRefresh} handleDelete={handleDelete}
+                handleEdit={handleEdit} images={images} setImages={setImages} />
+            </Route>
+            <Route exact path='/my_journals'>
+              {journals.length > 0 ? (
+                <Card.Group itemsPerRow={2}>
+                  {journals}
+                </Card.Group>
+              ) : <h2>No journal entries yet!</h2>}
+            </Route>
+            <Route exact path='/group_journals'>
+              <Card.Group>
+                <GroupJournals />
               </Card.Group>
-            ) : <h2>No journal entries yet!</h2>}
-          </Route>
-          <Route exact path='/group_journals'>
-            <Card.Group>
-              <GroupJournals />
-            </Card.Group>
-          </Route>
-          <Route exact path='/profile'>
-            <Profile addGroup={addGroup} setRefresh={setRefresh} groups={groups} />
-          </Route>
-          <Route exact path='/images'>
-            <AllUserImages images={images} setRefresh={setRefresh} setImages={setImages} />
-          </Route>
-        </Switch>
+            </Route>
+            <Route exact path='/profile'>
+              <Profile addGroup={addGroup} setRefresh={setRefresh} groups={groups} />
+            </Route>
+            <Route exact path='/images'>
+              <AllUserImages images={images} setRefresh={setRefresh} setImages={setImages} />
+            </Route>
+          </Switch>
       </UserContext.Provider>
+      </div>
     )
   }
 }

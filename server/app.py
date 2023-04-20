@@ -15,7 +15,7 @@ from config import app, db, api
 from models import User, State, Journal, Group, UserGroup, Image
 
 app.config['UPLOAD_FOLDER'] = 'static/images/'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 
@@ -26,8 +26,9 @@ def allowed_file(filename):
 class Index(Resource):
     def get(self):
         return(
-            'Welcome to Wander'
+            'Welcome to Wander!'
         )
+api.add_resource(Index, '/');
 
 class States(Resource):
     def get(self):

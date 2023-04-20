@@ -17,7 +17,7 @@ function StateJournalEntry({ journal, handleDelete, handleEdit, setRefresh, imag
     return (
         <Card raised>
             <Card.Content>
-                <Card.Header as='h1'>
+                <Card.Header as='h1' className='card-header'>
                     <Icon name='plane' />
                     {title}
                     <AddImagesModal journal={journal} setRefresh={setRefresh} images={images} setImages={setImages} />
@@ -36,7 +36,7 @@ function StateJournalEntry({ journal, handleDelete, handleEdit, setRefresh, imag
                     {body}
                 </Card.Description>
                 <Container textAlign='center'>
-                    <Grid columns={4}>
+                    <Grid columns={3}>
                         {imageCards}
                     </Grid>
                 </Container>

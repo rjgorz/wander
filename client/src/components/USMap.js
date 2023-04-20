@@ -36,7 +36,7 @@ const MapChart = ({ currState, setCurrState, setUserJournals }) => {
     fetch(`/user_journals/${user.id}`)
       .then((r) => r.json())
       .then((journals) => setUserJournals(journals))
-  }, [user]);
+  }, [user, setUserJournals]);
 
   if (user.id === 0) {
     return <h1>LOADING...</h1>
@@ -51,7 +51,7 @@ const MapChart = ({ currState, setCurrState, setUserJournals }) => {
     return (
       <div>
         <Sticky offset={70}>
-          <h2>{currState ? `${currState}` : 'Select a State!'}</h2>
+          <h2 id='state-label' className='state-selector'>{currState ? `${currState}` : 'Select a State!'}</h2>
         </Sticky>
         <ComposableMap projection="geoAlbersUsa">
           <Geographies geography={geoUrl}>

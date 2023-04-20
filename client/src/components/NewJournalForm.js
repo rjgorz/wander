@@ -117,7 +117,7 @@ function NewJournalForm({ addJournal, selectedState, setRefresh, open, setOpen }
                         {formik.errors.body ? <div className='error'>{formik.errors.body}</div> : null}
                         <br />
 
-                        <Form.Input label='Upload Images' type='file' name='files[]' accept="image/*" multiple onChange={handleFileInput} />
+                        <Form.Input label='Upload Images (up to 100MB):' type='file' name='files[]' accept="image/*" multiple onChange={handleFileInput} />
 
                         {errors.map((err) => (
                             <Error key={err}>{err}</Error>

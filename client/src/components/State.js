@@ -13,13 +13,13 @@ function State({ currState, states, addJournal, userJournals, setRefresh, handle
 
     return (
         <>
-            <h1>{currState}</h1>
+            <h1 className='state-selector'>{currState}</h1>
             <Divider />
             {journals.length > 0 ? (
                 <Card.Group itemsPerRow={2}>
                     {journals}
                 </Card.Group>
-            ) : <h2>No journal entries yet!</h2>}
+            ) : <h2 className='state-selector'>No journal entries yet!</h2>}
             <Divider />
             <NewJournalForm addJournal={addJournal} selectedState={selectedState} setRefresh={setRefresh} open={open} setOpen={setOpen} />
             <br />
